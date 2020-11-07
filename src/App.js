@@ -14,6 +14,7 @@ function App() {
     <div className="App">
       <Router>
         <Navigation />
+        <div className="content">
         <Switch>
           <Route path="/home">
             <Home />
@@ -31,6 +32,7 @@ function App() {
             <AdminView />
           </Route>
         </Switch>
+        </div>
         <Footer />
       </Router>
     </div>
