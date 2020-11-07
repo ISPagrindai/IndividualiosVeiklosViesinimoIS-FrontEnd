@@ -2,7 +2,7 @@ import { Button, Modal, Form } from 'react-bootstrap'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-export default function Login(){
+export default function Register(){
     const [show, setShow] = useState(false);
     const { register, handleSubmit} = useForm();
 
@@ -13,7 +13,7 @@ export default function Login(){
 
     return (
         <>
-        <Button className="ml-2" variant="secondary" onClick={() => setShow(true)}>Prisijungti</Button>
+        <Button variant="secondary" onClick={() => setShow(true)}>Registruotis</Button>
         <Modal
         show={show}
         onHide={() => setShow(false)}
@@ -23,7 +23,7 @@ export default function Login(){
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
-            Prisijungti
+            Registruotis
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -36,10 +36,14 @@ export default function Login(){
                 <Form.Label>Slaptažodis</Form.Label>
                 <Form.Control type="password" name="password" ref={register} placeholder="slaptažodis"/>
             </Form.Group>
+            <Form.Group>
+                <Form.Label>Pakartokite slaptažodį</Form.Label>
+                <Form.Control type="password" name="password2" ref={register} placeholder="slaptažodis"/>
+            </Form.Group>
         </Form>
         </Modal.Body>
         <Modal.Footer>
-            <Button type="submit" form="LoginForm" variant="secondary">Prisijungti</Button>
+            <Button type="submit" form="LoginForm" variant="secondary">Registruotis</Button>
         </Modal.Footer>
       </Modal>
         </>

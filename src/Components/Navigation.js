@@ -1,5 +1,6 @@
 import { Navbar, Nav } from "react-bootstrap";
 import Login from './Login'
+import Register from './Register'
 
 export default function Navigation() {
   return (
@@ -13,6 +14,7 @@ export default function Navigation() {
       <Nav.Link href="admin">Administratoriams</Nav.Link>
     </Nav>
     <Nav>
+      <Register />
       <Login />
     </Nav>
   </Navbar>
