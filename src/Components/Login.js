@@ -1,11 +1,10 @@
 import { Button, Modal, Form } from 'react-bootstrap'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import LoginService from '../Services/LoginService'
 
 export default function Login(){
     const [show, setShow] = useState(false);
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit} = useForm();
 
     const onSubmit = (data) => {
         setShow(false);
@@ -20,6 +19,7 @@ export default function Login(){
         onHide={() => setShow(false)}
         dialogClassName="modal-90w"
         aria-labelledby="example-custom-modal-styling-title"
+        centered
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
