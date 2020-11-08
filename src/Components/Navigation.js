@@ -1,6 +1,6 @@
 import { Navbar, Nav } from "react-bootstrap";
-import Login from './Login'
-import Register from './Register'
+import Login from './Authentication/Login'
+import Register from './Authentication/Register'
 
 export default function Navigation() {
   return (
