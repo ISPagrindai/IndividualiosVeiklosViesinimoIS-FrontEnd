@@ -15,6 +15,8 @@ import JobForm from './Views/JobForm'
 import VipForm from './Views/VipForm';
 import IndividualWorkEdit from './Views/IndividualWorkEdit';
 import IndividualWorkForm from './Views/IndividualWorkForm';
+import JobHistory from './Views/JobHistory';
+import Applicant from './Views/Applicant';
 
 function App() {
   return (
@@ -61,6 +63,12 @@ function App() {
           </Route>
           <Route path="/individualWorkForm">
             <IndividualWorkForm />
+          </Route>
+          <Route path="/jobHistory">
+            <JobHistory />
+          </Route>
+          <Route path="/applicant">
+            <Applicant />
           </Route>
         </Switch>
         </div>
