@@ -2,7 +2,7 @@
 export default function EmployersView(){
     return(
         <>
-            <h1>Registracija darbdaviam</h1>
+            <h1>Darbdavių aplinka</h1>
         </>
     );
 }

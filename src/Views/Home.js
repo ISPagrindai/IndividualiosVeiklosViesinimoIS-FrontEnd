@@ -17,7 +17,7 @@ export default function Home(){
                                 <p>Išsirink patinkantį darbą sau tinkamu metu ir kandidatuok.</p>
                             </div>
                             <div>
-                                <Button size="lg" variant="secondary">Ieškau darbo</Button>
+                                <Button href="employees" size="lg" variant="secondary">Ieškau darbo</Button>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@ export default function Home(){
                                 <p>Siūlome naują ir modernų būdą surasti darbuotojus trumpalaikiams darbams.</p>
                             </div>
                             <div>
-                                <Button size="lg" variant="secondary">Reikia darbuotojų</Button>
+                                <Button href="employers" size="lg" variant="secondary">Reikia darbuotojų</Button>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@ export default function Home(){
                                 <p>Įkelk savo sugebėjimus ir teikiamas paslaugas ir būk pastebėtas</p>
                             </div>
                             <div>
-                                <Button size="lg" variant="secondary">Teikiu paslaugas</Button>
+                                <Button href="individualWork" size="lg" variant="secondary">Teikiu paslaugas</Button>
                             </div>
                         </div>
                     </div>
