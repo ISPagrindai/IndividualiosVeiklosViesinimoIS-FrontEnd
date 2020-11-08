@@ -1,7 +1,7 @@
 import {Button} from 'react-bootstrap';
 import JobTable from '../Components/Employer/JobTable'
 
-export default function EmployersView(){
+export default function EmployersView(props){
     return(
         <>
             <div className="container-fluid">
@@ -37,7 +37,7 @@ export default function EmployersView(){
                     </div>
                     <div className="col-9 d-flex justify-content-center" style={{"background-color": "#9DD9D2", height: "100vh"}}>
                         <div className="align-self-center rounded">
-                            <JobTable employer={true} />
+                            <JobTable flag={props.flag} />
                         </div>
                     </div>
                 </div>

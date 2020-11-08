@@ -1,7 +1,11 @@
-import { Table } from "react-bootstrap";
-import Job from './Job'
+import { Table, Modal, Button } from "react-bootstrap";
+import {useState} from 'react'
+import Job from "./Job";
 
 export default function JobTable(props) {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const temp = [
     {
       id: 1,
@@ -42,11 +46,20 @@ export default function JobTable(props) {
           </tr>
         </thead>
         <tbody>
-            {temp.map(job => {
-                return <Job employer={props.employer} job={job} />
-            })}
+          {temp.map((job) => {
+            return <Job employer={props.flag} show={handleShow} close={handleClose} data={job} />;
+          })}
         </tbody>
       </Table>
+      <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ar tikrai norite testi?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

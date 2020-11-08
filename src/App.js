@@ -15,6 +15,7 @@ import JobForm from './Views/JobForm'
 import VipForm from './Views/VipForm';
 import IndividualWorkEdit from './Views/IndividualWorkEdit';
 import IndividualWorkForm from './Views/IndividualWorkForm';
+import CandidatesView from './Views/CandidatesView'
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
             <EmployeesView />
           </Route>
           <Route path="/employers">
-            <EmployersView />
+            <EmployersView flag={true} />
           </Route>
           <Route path="/admin">
             <AdminView />
@@ -49,6 +50,9 @@ function App() {
           </Route>
           <Route exact strict path="/job/:id">
             <Job />
+          </Route>
+          <Route exact strict path="/job/:id/candidates">
+            <CandidatesView flag={true} />
           </Route>
           <Route path="/newJob">
             <JobForm />
