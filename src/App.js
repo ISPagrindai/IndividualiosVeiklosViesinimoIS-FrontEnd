@@ -12,6 +12,9 @@ import UserProfile from './Views/UserProfile';
 import Review from './Views/Review';
 import Job from './Views/Job'
 import JobForm from './Views/JobForm'
+import VipForm from './Views/VipForm';
+import IndividualWorkEdit from './Views/IndividualWorkEdit';
+import IndividualWorkForm from './Views/IndividualWorkForm';
 
 function App() {
   return (
@@ -49,6 +52,15 @@ function App() {
           </Route>
           <Route path="/newJob">
             <JobForm />
+          </Route>
+          <Route path="/vipForm">
+            <VipForm />
+          </Route>
+          <Route path="/individualWorkEdit">
+            <IndividualWorkEdit />
+          </Route>
+          <Route path="/individualWorkForm">
+            <IndividualWorkForm />
           </Route>
         </Switch>
         </div>
