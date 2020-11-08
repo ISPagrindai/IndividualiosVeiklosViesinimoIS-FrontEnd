@@ -7,7 +7,9 @@ import EmployersView from './Views/EmployersView';
 import IndividualWorkView from './Views/IndividualWorkView';
 import AdminView from './Views/AdminView';
 import Home from './Views/Home';
-import Footer from './Components/Footer'
+import Footer from './Components/Footer';
+import UserProfile from './Views/UserProfile';
+import Review from './Views/Review';
 
 function App() {
   return (
@@ -30,6 +32,12 @@ function App() {
           </Route>
           <Route path="/admin">
             <AdminView />
+          </Route>
+          <Route path="/userProfile">
+            <UserProfile />
+          </Route>
+          <Route path="/review">
+            <Review />
           </Route>
         </Switch>
         </div>

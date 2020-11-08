@@ -1,0 +1,16 @@
+.mtcustom{
+    margin-top: 75px;
+}
+
+.mxcustom{
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+.bottomborder{
+    border-bottom: double;
+}
+
+.btnspace{
+    margin-right:0.5rem;
+}
