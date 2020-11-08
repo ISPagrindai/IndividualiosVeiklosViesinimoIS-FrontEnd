@@ -10,6 +10,9 @@ import Home from './Views/Home';
 import Footer from './Components/Footer';
 import UserProfile from './Views/UserProfile';
 import Review from './Views/Review';
+import VipForm from './Views/VipForm';
+import IndividualWorkEdit from './Views/IndividualWorkEdit';
+import IndividualWorkForm from './Views/IndividualWorkForm';
 
 function App() {
   return (
@@ -38,6 +41,15 @@ function App() {
           </Route>
           <Route path="/review">
             <Review />
+          </Route>
+          <Route path="/vipForm">
+            <VipForm />
+          </Route>
+          <Route path="/individualWorkEdit">
+            <IndividualWorkEdit />
+          </Route>
+          <Route path="/individualWorkForm">
+            <IndividualWorkForm />
           </Route>
         </Switch>
         </div>
