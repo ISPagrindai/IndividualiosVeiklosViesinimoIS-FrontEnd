@@ -3,7 +3,8 @@ import Button from 'react-bootstrap/Button'
 export default function Candidate(props){
     return(
         <tr>
-            <td><a href={`job/${props.data.id}`}>{props.data.name}</a></td>
+            {/* <td><a href={`job/${props.data.id}`}>{props.data.name}</a></td> */}
+            <td><a href='/individualWork'>{props.data.name}</a></td>
             <td>{props.data.surname}</td>
             <td>{props.data.birthday}</td>
             <td>{props.data.sex}</td>
