@@ -71,6 +71,11 @@ export default function IndividualWorkView() {
                   Palikti atsiliepimą
                 </Button>{" "}
               </div>
+              <div className={styles.mtcustom}>
+                <Button href="employeeOrder" variant="info">
+                  Užsisakyti darbuotoją!
+                </Button>{" "}
+              </div>
             </div>
           </div>
         </div>
