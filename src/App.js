@@ -62,7 +62,7 @@ function App() {
             <Review />
           </Route>
           <Route exact strict path="/job/edit/:id">
-            <Job Form />
+            <JobForm />
           </Route>
           <Route exact strict path="/job/:id">
             <Job />
