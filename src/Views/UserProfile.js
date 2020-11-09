@@ -104,10 +104,13 @@ export default function UserProfile(){
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-6 text-left">
+                            <div className="col-4 text-left">
                                 <Button href="jobHistory" variant="primary">Trumpalaikių darbų istorija</Button>{' '}
                             </div>
-                            <div className="col-6 text-right">
+                            <div className="col-4 text-center">
+                                <Button href="editUser" variant="info">Redaguoti</Button>{' '}
+                            </div>
+                            <div className="col-4 text-right">
                                 <Button href="individualWorkForm" variant="secondary">Sukurti trumpalaikį darbą</Button>{' '}
                             </div>
                         </div>

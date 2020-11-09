@@ -18,6 +18,15 @@ import IndividualWorkForm from './Views/IndividualWorkForm';
 import CandidatesView from './Views/CandidatesView'
 import JobHistory from './Views/JobHistory';
 import Applicant from './Views/Applicant';
+import NewEmployer from './Views/adminViews/NewEmployer';
+import AdminForm from './Views/adminViews/AdminForm';
+import ReportsView from './Views/adminViews/ReportsView';
+import JobsView from './Views/adminViews/JobsView';
+import ReportView from './Views/adminViews/ReportView';
+import EmployersViewAdmin from './Views/adminViews/EmployersViewAdmin';
+import UserView from './Views/adminViews/UserView';
+import EditUser from './Views/EditUser';
+
 
 function App() {
   return (
@@ -48,7 +57,7 @@ function App() {
             <Review />
           </Route>
           <Route exact strict path="/job/edit/:id">
-            <JobForm />
+            <Job Form />
           </Route>
           <Route exact strict path="/job/:id">
             <Job />
@@ -74,7 +83,31 @@ function App() {
           <Route path="/applicant">
             <Applicant />
           </Route>
-        </Switch>
+          <Route path="/newEmployer">  
+            <NewEmployer />
+          </Route>
+          <Route path="/adminForm">  
+            <AdminForm />
+          </Route>
+          <Route path="/reports">  
+            <ReportsView />
+          </Route>
+          <Route path="/jobs">  
+            <JobsView />
+          </Route>
+          <Route exact strict path="/report/:id">  
+            <ReportView />
+          </Route>
+          <Route path="/employerAdmin">  
+            <EmployersViewAdmin />
+          </Route>
+          <Route path="/user">  
+            <UserView />
+          </Route>
+          <Route path="/editUser">  
+            <EditUser/>
+          </Route>
+          </Switch>
         </div>
         <Footer />
       </Router>
