@@ -2,6 +2,7 @@ import { Container, Row, Modal, Button } from "react-bootstrap";
 import {useState} from 'react'
 import IndividualWork from "./IndividualWork";
 import CategoryFilter from "./CategoryFilter";
+import IndividualWorkListSort from "./IndividualWorkListSort";
 
 export default function IndividualWorkList(props) {
   const [show, setShow] = useState(false);
@@ -35,35 +36,106 @@ export default function IndividualWorkList(props) {
         email: "vitalijus.sodas@gmail.com",
         description: "Gerai pjaunu žolę, geniu medžius, raviu daržus. Galiu padaryti ir ISP laborą."
     },
+    {
+      id: 4,
+      category: "Arbatos virimas",
+      image: "/assets/images/tea.jpg",
+      fullName: "Cin Zong",
+      phone: "864981233",
+      email: "zong.tea@gmail.com",
+      description: "Verdu geriausias arbatas visuose Mažeikiuose."
+    },
+    {
+      id: 5,
+      category: "Žvejyba",
+      image: "/assets/images/fisher.jpg",
+      fullName: "Arūnas Abrazevičius",
+      phone: "869413754",
+      email: "arūnas.žuvis@gmail.com",
+      description: "Neturi su kuo žvejoti? Žmone užkniso namuose? Užsisakyk mano paslaugas, ir savaitgalį galėsim žvejoti kartu!"
+    },
   ];
 
   const [category, setCategory] = useState(null);
+  const [number, setNumber] = useState(null);
 
-  const sendDataToParent = (index) => {
+  const sendCategoryToParent = (index) => {
     console.log(index);
     setCategory(index);
+  }
+
+  const sendNumberToParent = (index) => {
+    console.log(index);
+    setNumber(index);
+    console.log(temp);
+    console.log(temp.sort(function(a, b){
+      if(a.category < b.category) { return -1; }
+      if(a.category > b.category) { return 1; }
+      return 0;
+    }))
   }
 
   return (
     <>
     <Row>
     <div className="col-sm-3 col-md-3 col-lg-2 mx-3">
-        <CategoryFilter sendDataToParent={sendDataToParent} data={temp}></CategoryFilter>
+        <CategoryFilter sendCategoryToParent={sendCategoryToParent} data={temp}></CategoryFilter>
+        < br/>
+        <IndividualWorkListSort sendNumberToParent={sendNumberToParent} data={temp}></IndividualWorkListSort>
     </div>
 
     <div className="col">
     <Container fluid>
         <Row xs={1} sm={1} md={1} lg={2} xl={3}>
-        {category ?
-        
-          temp.filter(w => w.category === category).map((work) => {
-            return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
-        })
-        :
-          temp.map((work) => {
-            return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
-        })
+        {number === "A-Z" ?
+          category ?
+            temp.sort(function(a, b){
+              if(a.category < b.category) { return -1; }
+              if(a.category > b.category) { return 1; }
+              return 0;
+            }).filter(w => w.category === category).map((work) => {
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+          })
+          :
+            temp.sort(function(a, b){
+              if(a.category < b.category) { return -1; }
+              if(a.category > b.category) { return 1; }
+              return 0;
+            }).map((work) => {
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+          })
+          : 
+          (number === "Z-A" ?
+            category ?
+            temp.sort(function(a, b){
+              if(a.category < b.category) { return 1; }
+              if(a.category > b.category) { return -1; }
+              return 0;
+            }).filter(w => w.category === category).map((work) => {
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+            })
+            :
+            temp.sort(function(a, b){
+              if(a.category < b.category) { return 1; }
+              if(a.category > b.category) { return -1; }
+              return 0;
+            }).map((work) => {
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+            })
+          :
+            category ?
+            temp.filter(w => w.category === category).map((work) => {
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+          })
+          :
+            temp.map((work) => {
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+          })
+          ) 
         }
+        
+
+        
         </Row>
         </Container>
     </div>

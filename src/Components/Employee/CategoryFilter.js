@@ -10,18 +10,19 @@ export default function CategoryFilter(props) {
     });
 
     const handleClick = (event) => {
-      props.sendDataToParent(event.target.value);
+      props.sendCategoryToParent(event.target.value);
     }
 
     const handleClickAll = () => {
-      props.sendDataToParent(null);
+      props.sendCategoryToParent(null);
     }
 
 
     return (
     <>
         <ListGroup>
-        <ListGroupItem action onClick={handleClickAll}>Visos kategorijos</ListGroupItem>
+        <ListGroupItem disabled action style={{backgroundColor: "#5d4037", color: "white"}}>Kategorijos</ListGroupItem>
+        <ListGroupItem action onClick={handleClickAll}>Visos</ListGroupItem>
         {
           uniqueCategories.map((category) => {
             return (
