@@ -45,7 +45,7 @@ function App() {
           <Route path="/individualWorkList">
             <IndividualWorkListView />
           </Route>
-          <Route path="/individualWork">
+          <Route path="/individualWork/:id">
             <IndividualWorkView />
           </Route>
           <Route path="/employees">
