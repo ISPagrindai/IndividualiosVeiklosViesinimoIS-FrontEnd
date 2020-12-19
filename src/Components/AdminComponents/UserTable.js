@@ -61,7 +61,7 @@ export default function UserTable(props) {
         </Modal.Header>
         <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Patvirtinti</Button>
+          <Button variant="danger" onClick={() => setShow(false)}>Užšaldyti</Button>
         </Modal.Footer>
       </Modal>
     </>
