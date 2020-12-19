@@ -18,11 +18,9 @@ export default function IndividualWorkView(props) {
           <div className="card my-3">
             <h5 className="card-header">{worker.category}</h5>
             <div className="row">
-              <div className="col-6 container-profile">
-                <img className="card-img" src={`${process.env.PUBLIC_URL}${worker.image}`} />
-              </div>
               
-              <div className="col-6">
+              
+              <div className="col">
                 <div className="card-title">
                   <a href="userProfile" style={{ color: "#000" }}></a>
                   <ul className="list-group list-group-flush">
@@ -42,7 +40,6 @@ export default function IndividualWorkView(props) {
                   {worker.description}
                 </div>
                     </li>
-                    <br/>
                   </ul>
                 </div>
               </div>

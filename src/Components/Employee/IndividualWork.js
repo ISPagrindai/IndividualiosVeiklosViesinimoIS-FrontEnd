@@ -11,14 +11,9 @@ export default function IndividualWork(props){
           <Col>
             <div className="card my-3">
               <h5 className="card-header">{props.data.category}</h5>
-              <div className="row">
-                <div className="col-6 container-profile">
-                  <img className="card-img" src={`${process.env.PUBLIC_URL}${props.data.image}`} />
-                </div>
-                
-                <div className="col-6">
+              <div className="row">      
+                <div className="col">
                   <div className="card-title">
-                    <a href="userProfile" style={{ color: "#000" }}></a>
                     <ul className="list-group list-group-flush">
                       <li className="list-group-item">
                       <Button href="review" variant="info">
@@ -61,7 +56,7 @@ export default function IndividualWork(props){
                 </Button>{" "}
               </div>
             </div>
-            </Col>
+          </Col>
             
     </>
     );
