@@ -60,7 +60,7 @@ export default function IndividualWorkView(props) {
               </div>
             </div>
             <div className="card-footer">
-              <Button href="/review" variant="success">
+              <Button href="/employeeReview" variant="success">
                 Palikti atsiliepimą
               </Button>{" "}
               <Button

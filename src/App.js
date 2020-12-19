@@ -10,7 +10,7 @@ import AdminView from './Views/AdminView';
 import Home from './Views/Home';
 import Footer from './Components/Footer';
 import UserProfile from './Views/UserProfile';
-import Review from './Views/Review';
+import EmployeeReviewForm from './Views/EmployeeReviewForm';
 import Job from './Views/Job'
 import JobForm from './Views/JobForm'
 import VipForm from './Views/VipForm';
@@ -27,10 +27,9 @@ import ReportView from './Views/adminViews/ReportView';
 import EmployersViewAdmin from './Views/adminViews/EmployersViewAdmin';
 import UserView from './Views/adminViews/UserView';
 import EditUser from './Views/EditUser';
-import AutomaticOrder from './Views/AutomaticOrderForm.js';
-
 import EmployeeOrderView from './Views/EmployeeOrderView';
 import AutomaticOrderForm from './Views/AutomaticOrderForm.js';
+import EmployerReviewForm from './Views/EmployerReviewForm';
 
 function App() {
   return (
@@ -63,8 +62,8 @@ function App() {
           <Route path="/userProfile">
             <UserProfile />
           </Route>
-          <Route path="/review">
-            <Review />
+          <Route path="/employeeReview">
+            <EmployeeReviewForm />
           </Route>
           <Route exact strict path="/job/edit/:id">
             <JobForm />
@@ -122,6 +121,9 @@ function App() {
           </Route>
           <Route path="/automaticOrder/:id">
             <AutomaticOrderForm/>
+          </Route>
+          <Route path="/employerReviewForm">
+            <EmployerReviewForm></EmployerReviewForm>
           </Route>
         </Switch>
         </div>

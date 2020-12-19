@@ -11,13 +11,13 @@ export default function Review() {
   return (
           <div className="container my-5">
               <div className="row justify-content-center">
-                  <div className="col-5">
-                    <div className="card px-3 py-3">
-                        <h4>Atsiliepimo apie individualią veiklą palikimas</h4> 
+                  <div className="col-6">
+                    <div className="card">
+                        <h4 className="card-header">Atsiliepimas apie individualią veiklą</h4> 
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="row justify-content-center">
                                 <div className="form-group">
-                                    <label htmlFor="comment">Komentaras</label>
+                                    <label className="mt-2" htmlFor="comment">Komentaras</label>
                                     <textarea
                                     id="comment"
                                     name="comment"
@@ -62,7 +62,7 @@ export default function Review() {
                                 </div>
                             </div>
                             <div className="row justify-content-center">
-                                <Button type="submit" variant="secondary" className="mt-3">
+                                <Button type="submit" variant="secondary" className="mb-3">
                                     Siųsti atsiliepimą
                                 </Button>
                             </div>

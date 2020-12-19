@@ -9,7 +9,7 @@ export default function Job() {
       <Button href={`${id}/candidates`} variant="secondary">
         Kandidatų sąrašas
       </Button>
-      <Button href="../review" variant="primary">
+      <Button href="/employerReviewForm" variant="primary">
         Imonės atsiliepimas
       </Button>{" "}
       <Button href="../applicant" variant="secondary">
