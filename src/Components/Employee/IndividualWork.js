@@ -1,7 +1,11 @@
 import { Col, Table, Modal, Button } from "react-bootstrap";
-import {useState} from 'react'
+import {useState} from 'react';
+import emailjs from 'emailjs-com';
+import{ init } from 'emailjs-com';
+init("user_eNIaeY7tuSTS9yz3Rtsvq");
 
-export default function IndividualWork(props){ 
+export default function IndividualWork(props){
+
     return (
     <> 
           <Col>
@@ -20,7 +24,7 @@ export default function IndividualWork(props){
                       <Button href="review" variant="info">
                         Iškelti profilį !
                       </Button>{" "}
-                      <Button className="text my-1" href="individualWork"  variant="success">
+                      <Button className="text my-1" href={`individualWork/${props.data.id}`} variant="success">
                         Peržiūrėti profilį
                         </Button>{" "}
                       </li>
@@ -60,6 +64,10 @@ export default function IndividualWork(props){
                 
                 <Button href="employeeOrder" className="my-1" variant="dark">
                   Užsisakyti darbuotoją !
+                </Button>{" "}
+
+                <Button className="my-1" variant="dark" href={`automaticOrder/${props.data.id}`}>
+                  Generuoti automatinį užsakymo laišką
                 </Button>{" "}
               </div>
             </div>

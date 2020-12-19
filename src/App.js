@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, useParams } from 'react-router-dom'
 import Navigation from './Components/Navigation'
 import EmployeesView from './Views/EmployeesView';
 import EmployersView from './Views/EmployersView';
@@ -27,8 +27,10 @@ import ReportView from './Views/adminViews/ReportView';
 import EmployersViewAdmin from './Views/adminViews/EmployersViewAdmin';
 import UserView from './Views/adminViews/UserView';
 import EditUser from './Views/EditUser';
+import AutomaticOrder from './Views/AutomaticOrderForm.js';
 
 import EmployeeOrderView from './Views/EmployeeOrderView';
+import AutomaticOrderForm from './Views/AutomaticOrderForm.js';
 
 function App() {
   return (
@@ -115,6 +117,9 @@ function App() {
           <Route path="/employeeOrder">
             <EmployeeOrderView />
           </Route>
+          <Route path="/automaticOrder/:id">
+            <AutomaticOrderForm/>
+          </Route>
         </Switch>
         </div>
         <Footer />
@@ -122,6 +127,7 @@ function App() {
     </div>
   );
 }
+
 export default App;
 
 

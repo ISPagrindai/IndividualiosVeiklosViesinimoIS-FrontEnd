@@ -10,6 +10,14 @@
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
+  <!-- email generator -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.3.2/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      emailjs.init("user_eNIaeY7tuSTS9yz3Rtsvq"); // Obtain your user ID at the dashboard https://dashboard.emailjs.com/integration
+    })();
+  </script>
+
   <script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin></script>
 
   <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossorigin></script>
