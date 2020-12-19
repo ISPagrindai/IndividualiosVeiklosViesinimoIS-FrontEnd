@@ -50,17 +50,7 @@ export default function IndividualWork(props){
                 </div>
               </div>
               <div className="card-footer">
-                <Button href="review" variant="success">
-                  Palikti atsiliepimą
-                </Button>{" "}
-                <Button
-                  href="individualWorkEdit"
-                  className="text-white"
-                  variant="warning"
-                >
-                Redaguoti
-                </Button>{" "}
-                <Button onClick={props.show} variant="danger">Ištrinti</Button>{" "}
+               
                 
                 <Button href="employeeOrder" className="my-1" variant="dark">
                   Užsisakyti darbuotoją !
@@ -72,6 +62,7 @@ export default function IndividualWork(props){
               </div>
             </div>
             </Col>
+            
     </>
     );
 }
