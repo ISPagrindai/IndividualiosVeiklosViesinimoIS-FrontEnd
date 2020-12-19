@@ -1,13 +1,29 @@
 import temp from "../tempWorkersArray";
 import { useParams } from "react-router";
 import { useState } from "react";
-import { Button, Col, Container, ListGroup, ListGroupItem, Modal, Row } from "react-bootstrap";
+import { Button, Col, Container, Table, ListGroupItem, Modal, Row } from "react-bootstrap";
+import EmployeeReview from '../Components/Employee/EmployeeReview';
 
 export default function IndividualWorkView(props) {
   let {id} = useParams();
-  const worker = temp.find(w => w.id == id);
+  const [worker, setWorker] = useState(temp.find(w => w.id == id));
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
+
+  const reviews = [
+    {
+      comment: "Labai gerai dirba",
+      rating: 7.8,
+      user_id: 2,
+      user_type: "Registruota įmonė"
+    },
+    {
+      comment: "Supiso mano audi",
+      rating: 3.2,
+      user_id: 7,
+      user_type: "Administratorius"
+    }
+  ];
 
   return (
     <>
@@ -17,10 +33,8 @@ export default function IndividualWorkView(props) {
           <Col>
           <div className="card my-3">
             <h5 className="card-header">{worker.category}</h5>
-            <div className="row">
-              
-              
-              <div className="col">
+            <div className="row">   
+              <div className="col-12">
                 <div className="card-title">
                   <a href="userProfile" style={{ color: "#000" }}></a>
                   <ul className="list-group list-group-flush">
@@ -40,12 +54,13 @@ export default function IndividualWorkView(props) {
                   {worker.description}
                 </div>
                     </li>
+                    <br/>
                   </ul>
                 </div>
               </div>
             </div>
             <div className="card-footer">
-              <Button href="review" variant="success">
+              <Button href="/review" variant="success">
                 Palikti atsiliepimą
               </Button>{" "}
               <Button
@@ -61,30 +76,36 @@ export default function IndividualWorkView(props) {
           </Col>
         </Col>
         <Col>
-          <ListGroup className="mt-3">
-            <ListGroupItem className="bg-info text-white">
-              Atsiliepimai
-            </ListGroupItem>
-            <ListGroupItem>
-              atsiliepimas 1
-            </ListGroupItem>
-            <ListGroupItem>
-              atsiliepimas 2
-            </ListGroupItem>
-            <ListGroupItem>
-              atsiliepimas 3
-            </ListGroupItem>
-            <ListGroupItem>
-              atsiliepimas 4
-            </ListGroupItem>
-            <ListGroupItem>
-              atsiliepimas 5
-            </ListGroupItem>
-          </ListGroup>
+        <Table striped bordered variant="grey" className="my-3">
+            <thead className="bg-info text-white">
+              <tr>
+                <th>Komentaras</th>
+                <th>Įvertinimas</th>
+                <th>Siuntėjo tipas</th>
+                <th>Siuntėjo ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              { reviews.map((review) => {
+                    return <EmployeeReview data={review}></EmployeeReview>
+                })
+              }
+            </tbody>
+          </Table>
         </Col>
       </Row>
        
       </Container>
+
+      <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ar tikrai norite testi?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
+        </Modal.Footer>
+      </Modal>
 
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>

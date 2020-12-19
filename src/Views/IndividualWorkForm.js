@@ -45,7 +45,7 @@ export default function UserProfile() {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="wage">Kaina:</label>
+                            <label htmlFor="wage">Kaina (valandai):</label>
                             <Controller
                                 render={({onChange, onBlur}) => (
                                 <CurrencyInput                 

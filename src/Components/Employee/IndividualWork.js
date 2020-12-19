@@ -12,16 +12,11 @@ export default function IndividualWork(props){
             <div className="card my-3">
               <h5 className="card-header">{props.data.category}</h5>
               <div className="row">      
-                <div className="col">
+                <div className="col-12">
                   <div className="card-title">
+                    <a href="userProfile" style={{ color: "#000" }}></a>
                     <ul className="list-group list-group-flush">
                       <li className="list-group-item">
-                      <Button href="review" variant="info">
-                        Iškelti profilį !
-                      </Button>{" "}
-                      <Button className="text my-1" href={`individualWork/${props.data.id}`} variant="success">
-                        Peržiūrėti profilį
-                        </Button>{" "}
                       </li>
                       <li className="list-group-item"
                           style={{ color: "#000" }}
@@ -45,7 +40,14 @@ export default function IndividualWork(props){
                 </div>
               </div>
               <div className="card-footer">
-               
+
+                <Button href="vipForm" className="my-1" variant="info">
+                  Iškelti profilį
+                  </Button>{" "}
+                  
+                <Button href={`individualWork/${props.data.id}`} variant="success">
+                  Peržiūrėti profilį
+                </Button>{" "}
                 
                 <Button href="employeeOrder" className="my-1" variant="dark">
                   Užsisakyti darbuotoją !

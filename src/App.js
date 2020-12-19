@@ -48,6 +48,9 @@ function App() {
           <Route path="/individualWork/:id">
             <IndividualWorkView />
           </Route>
+          <Route exact strict path="/individualWork/edit/:id">
+            <IndividualWorkView />
+          </Route>
           <Route path="/employees">
             <EmployeesView />
           </Route>
