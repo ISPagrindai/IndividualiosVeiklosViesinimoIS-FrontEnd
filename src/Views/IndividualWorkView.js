@@ -5,7 +5,7 @@ import { Button, Col, Container, ListGroup, ListGroupItem, Modal, Row } from "re
 
 export default function IndividualWorkView(props) {
   let {id} = useParams();
-  const [worker, setWorker] = useState(temp.find(w => w.id == id));
+  const worker = temp.find(w => w.id == id);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
 
