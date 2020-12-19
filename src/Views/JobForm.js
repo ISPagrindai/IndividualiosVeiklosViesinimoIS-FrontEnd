@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import CurrencyInput from 'react-currency-input-field';
 
 export default function JobForm() {
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, errors, control } = useForm();
   const onSubmit = (values) => {
     console.log(values);
   };
@@ -11,15 +11,18 @@ export default function JobForm() {
   return (
     <div
       className="col-sm d-flex justify-content-center"
-      style={{ "background-color": "#b9e4f4", height: "100vh" }}
+      style={{ "backgroundColor": "#b9e4f4", height: "100vh" }}
     >
       <div
         className="align-self-center"
-        style={{ "background-color": "#9DD9D2" }}
+        style={{ 
+            "backgroundColor": "#b9e4f7",
+            "width": 500
+     }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
-            <label for="name">Pavadinimas:</label>
+            <label htmlFor="name">Pavadinimas:</label>
             <input
               id="name"
               name="name"
@@ -32,11 +35,11 @@ export default function JobForm() {
                 },
               })}
             />
-            {errors.name && errors.name.message}
+            {errors.name && <span style={{"color": "red"}}>{errors.name.message}</span>}
           </div>
 
           <div className="form-group">
-            <label for="name">Aprašymas:</label>
+            <label htmlFor="name">Aprašymas:</label>
             <textarea
               id="aprasymas"
               name="aprasymas"
@@ -45,26 +48,34 @@ export default function JobForm() {
                 required: "*Privalomas laukas",
               })}
             />
-            {errors.aprasymas && errors.aprasymas.message}
+            {errors.aprasymas && <span style={{"color": "red"}}>{errors.aprasymas.message}</span>}
           </div>
 
           <div className="form-group">
-            <label for="wage">Valandinis užmokestis:</label>
-            <CurrencyInput
-              id="wage"
-              name="wage"
-              className="form-control"
-              allowDecimals={true}
-              allowNegativeValue={false}
-              decimalsLimit={2}
-              prefix="€"
-              onChange={(value, name) => console.log(value, name)}
-            />
+            <label htmlFor="wage">Valandinis užmokestis:</label>
+              <Controller
+                render={({onChange, onBlur}) => (
+                <CurrencyInput                 
+                  className="form-control"
+                  allowDecimals={true}
+                  allowNegativeValue={false}
+                  decimalsLimit={2}
+                  prefix="€"
+                  onChange={(e) => onChange(e)}
+                  
+                />)}
+                id="wage"
+                name="wage"
+                rules={{ required: '*Privalomas laukas', min: {value: 0.01, message: '*Privalomas laukas'} }}
+                control={control}
+                defaultValue={"-1"}
+              />
+              {errors.wage && <span style={{"color": "red"}}>{errors.wage.message}</span>}
           </div>
 
-          <div class="form-group">
-            <label for="miestas">Miestas</label>
-            <select class="form-control" id="miestas" name="miestas" ref={register({required: "*Privalomas laukas"})}>
+          <div className="form-group">
+            <label htmlFor="miestas">Miestas</label>
+            <select className="form-control" id="miestas" name="miestas" ref={register({required: "*Privalomas laukas"})}>
               <option value="">Pasirinkite miestą</option>
               <option value="Vilnius">Vilnius</option>
               <option value="Kaunas">Kaunas</option>
@@ -74,11 +85,28 @@ export default function JobForm() {
               <option value="Alytus">Alytus</option>
               <option value="Marijampolė">Marijampolė</option>
             </select>
-            {errors.miestas && errors.miestas.message}
+            {errors.miestas && <span style={{"color": "red"}}>{errors.miestas.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="name">Adresas:</label>
+            <input
+              id="address"
+              name="address"
+              className="form-control"
+              ref={register({
+                required: "*Privalomas laukas",
+                minLength: {
+                  value: 5,
+                  message: "*Adresą turi sudaryti bent 5 simboliai",
+                },
+              })}
+            />
+            {errors.address && <span style={{"color": "red"}}>{errors.address.message}</span>}
           </div>
           
 
-          <Button size="lg" variant="secondary">
+          <Button type="submit" variant="secondary">
             Kurti
           </Button>
         </form>
