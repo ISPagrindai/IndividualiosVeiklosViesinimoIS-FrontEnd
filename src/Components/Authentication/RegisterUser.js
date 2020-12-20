@@ -1,6 +1,7 @@
 import { Button, Modal } from 'react-bootstrap'
 import { useState } from 'react'
 import { useForm } from "react-hook-form";
+import { RegisterUserService } from '../../Services/LoginService'
 
 export default function RegisterUser(props){
     const [show, setShow] = useState(false);
@@ -8,7 +9,9 @@ export default function RegisterUser(props){
     const { handleSubmit, register, errors } = useForm();
 
     const onSubmit = (values) => {
-      console.log(values);
+      RegisterUserService(values).then(() =>{
+        setShow(false);
+      })
     };
 
     return (
@@ -32,7 +35,7 @@ export default function RegisterUser(props){
             <label htmlFor="firstname">Vardas:</label>
             <input
               id="firstname"
-              name="firstname"
+              name="vardas"
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
@@ -42,14 +45,14 @@ export default function RegisterUser(props){
                 }
               })}
             />
-            {errors.firstname && <span style={{"color": "red"}}>{errors.firstname.message}</span>}
+            {errors.vardas && <span style={{"color": "red"}}>{errors.vardas.message}</span>}
           </div>
 
           <div className="form-group">
             <label htmlFor="lastname">Pavardė:</label>
             <input
               id="lastname"
-              name="lastname"
+              name="pavarde"
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
@@ -59,22 +62,40 @@ export default function RegisterUser(props){
                 }
               })}
             />
-            {errors.lastname && <span style={{"color": "red"}}>{errors.lastname.message}</span>}
+            {errors.pavarde && <span style={{"color": "red"}}>{errors.pavarde.message}</span>}
           </div>
 
           <div className="form-group">
             <label htmlFor="name">El-paštas:</label>
             <input
               id="email"
-              name="email"
+              name="epastas"
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
                 pattern:  /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
               })}
             />
-            {errors.email && <span style={{"color": "red"}}>{errors.email.message}</span>}
-            {errors.email && errors.email.type === "pattern" && <span style={{"color": "red"}}>*Neatitinka email formato</span>}
+            {errors.epastas && <span style={{"color": "red"}}>{errors.epastas.message}</span>}
+            {errors.epastas && errors.epastas.type === "pattern" && <span style={{"color": "red"}}>*Neatitinka email formato</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="slaptazodis">Slaptažodis:</label>
+            <input
+              id="slaptazodis"
+              name="slaptazodis"
+              className="form-control"
+              type="password"
+              ref={register({
+                required: "*Privalomas laukas",
+                minLength: {
+                  value: 8,
+                  message: "*Turi būti bent 8 simboliai"
+                }
+              })}
+            />
+            {errors.slaptazodis && <span style={{"color": "red"}}>{errors.slaptazodis.message}</span>}
           </div>
 
           <div className="form-group">
@@ -100,7 +121,7 @@ export default function RegisterUser(props){
             <label htmlFor="id">Asmens kodas:</label>
             <input
               id="id"
-              name="id"
+              name="asmenskodas"
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
@@ -115,31 +136,30 @@ export default function RegisterUser(props){
                 }
               })}
             />
-            {errors.id && <span style={{"color": "red"}}>{errors.id.message}</span>}
-            {errors.id && errors.id.type === "pattern" && <span style={{"color": "red"}}>*Turi būti skaičius</span>}
+            {errors.asmenskodas && <span style={{"color": "red"}}>{errors.asmenskodas.message}</span>}
+            {errors.asmenskodas && errors.asmenskodas.type === "pattern" && <span style={{"color": "red"}}>*Turi būti skaičius</span>}
           </div>
 
           <div className="form-group">
             <label htmlFor="name">Gimimo data:</label>
             <input
               id="birthday"
-              name="birthday"
+              name="gimimometai"
               type="date"
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
               })}
             />
-            {errors.birthday && <span style={{"color": "red"}}>{errors.birthday.message}</span>}
+            {errors.gimimometai && <span style={{"color": "red"}}>{errors.gimimometai.message}</span>}
           </div>
 
           <div className="form-group">
             <label htmlFor="gender">Lytis</label>
-            <select className="form-control" id="gender" name="gender" ref={register({required: "*Privalomas laukas"})}>
+            <select className="form-control" id="gender" name="lytis" ref={register({required: "*Privalomas laukas"})}>
               <option value="">Pasirinkite lytį</option>
-              <option value="male">Vyras</option>
-              <option value="female">Moteris</option>
-              <option value="apache">Boeing AH-64 Apache</option>
+              <option value="vyr">Vyras</option>
+              <option value="mot">Moteris</option>              
             </select>
             {errors.gender && <span style={{"color": "red"}}>{errors.gender.message}</span>}
           </div>
@@ -148,7 +168,7 @@ export default function RegisterUser(props){
             <label htmlFor="iban">Saskaitos numeris:</label>
             <input
               id="iban"
-              name="iban"
+              name="sasnr"
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
@@ -163,8 +183,8 @@ export default function RegisterUser(props){
                 }
               })}
             />
-            {errors.iban && <span style={{"color": "red"}}>{errors.iban.message}</span>}
-            {errors.iban && errors.iban.type === "pattern" && <span style={{"color": "red"}}>*Turi būti validus IBAN numeris</span>}
+            {errors.sasnr && <span style={{"color": "red"}}>{errors.sasnr.message}</span>}
+            {errors.sasnr && errors.sasnr.type === "pattern" && <span style={{"color": "red"}}>*Turi būti validus IBAN numeris</span>}
           </div>
           
 

@@ -1,9 +1,18 @@
 import axios from 'axios';
+import cookie from 'js-cookie';
 
 const API_URL = 'https://localhost:5001/api';
 
-export default function setAuthorizationToken(token) {
-  axios.defaults.headers.common['Authorization'] = token;
+axios.interceptors.request.use((config) => {
+  const token = cookie.get('TOKEN');
+  if(token){
+    config.headers["Authorization"] = 'Bearer ' + token;
+  }
+  return config;
+});
+
+export function setAuthorizationToken(token) {
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 }
 
 export function get(url, id = '') {

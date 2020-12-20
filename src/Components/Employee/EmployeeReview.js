@@ -7,6 +7,7 @@ export default function EmployeeReview(props){
             <td>{props.data.rating}</td>
             <td>{props.data.user_type}</td>
             <td>{props.data.user_id}</td>
+            <td>{props.data.job_type}</td>
         </tr>
     );
 }

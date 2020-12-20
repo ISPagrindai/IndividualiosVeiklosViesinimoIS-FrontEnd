@@ -1,14 +1,19 @@
 import { Button, Modal, Form } from 'react-bootstrap'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import {Login as PostLogin} from '../../Services/LoginService'
 
-export default function Login(){
+export default function Login(props){
     const [show, setShow] = useState(false);
     const { register, handleSubmit} = useForm();
 
     const onSubmit = (data) => {
-        setShow(false);
-        //TODO: call login service
+      PostLogin(data)
+      .then((response) =>{
+        props.setIsLoggedIn(response);
+      })
+
+      setShow(false);
     }
 
     return (

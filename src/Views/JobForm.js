@@ -1,12 +1,26 @@
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import CurrencyInput from 'react-currency-input-field';
+import {useState, useEffect} from 'react'
+import {getJobTypes} from '../Services/HelperService';
+import {newJob} from '../Services/JobService'
+import { useHistory } from 'react-router-dom';
 
 export default function JobForm() {
   const { handleSubmit, register, errors, control } = useForm();
+  const [types, setTypes] = useState();
+  const history = useHistory();
   const onSubmit = (values) => {
-    console.log(values);
+    newJob(values).then(() => {
+      history.push("/employers");
+    })
   };
+
+  useEffect(() =>{
+    getJobTypes().then(response => {
+      setTypes(response)
+    })
+  }, [])
 
   return (
     <div
@@ -25,7 +39,7 @@ export default function JobForm() {
             <label htmlFor="name">Pavadinimas:</label>
             <input
               id="name"
-              name="name"
+              name="pavadinimas"
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
@@ -35,7 +49,7 @@ export default function JobForm() {
                 },
               })}
             />
-            {errors.name && <span style={{"color": "red"}}>{errors.name.message}</span>}
+            {errors.pavadinimas && <span style={{"color": "red"}}>{errors.pavadinimas.message}</span>}
           </div>
 
           <div className="form-group">
@@ -65,12 +79,12 @@ export default function JobForm() {
                   
                 />)}
                 id="wage"
-                name="wage"
+                name="uzmokestis"
                 rules={{ required: '*Privalomas laukas', min: {value: 0.01, message: '*Privalomas laukas'} }}
                 control={control}
                 defaultValue={"-1"}
               />
-              {errors.wage && <span style={{"color": "red"}}>{errors.wage.message}</span>}
+              {errors.uzmokestis && <span style={{"color": "red"}}>{errors.uzmokestis.message}</span>}
           </div>
 
           <div className="form-group">
@@ -92,7 +106,7 @@ export default function JobForm() {
             <label htmlFor="name">Adresas:</label>
             <input
               id="address"
-              name="address"
+              name="adresas"
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
@@ -102,9 +116,17 @@ export default function JobForm() {
                 },
               })}
             />
-            {errors.address && <span style={{"color": "red"}}>{errors.address.message}</span>}
+            {errors.adresas && <span style={{"color": "red"}}>{errors.adresas.message}</span>}
           </div>
-          
+
+          <div className="form-group">
+          <label htmlFor="tipas">Veiklos tipas</label>
+            <select className="form-control" id="tipas" name="veiklostipas" ref={register({required: "*Privalomas laukas"})}>
+              <option value="">Pasirinkite tipą</option>
+              {types ? types.map(type => (<option value={type.id}>{type.pavadinimas}</option>)) : null}
+            </select>
+            {errors.veiklostipas && <span style={{"color": "red"}}>{errors.veiklostipas.message}</span>} 
+          </div>          
 
           <Button type="submit" variant="secondary">
             Kurti
