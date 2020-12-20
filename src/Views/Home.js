@@ -5,7 +5,7 @@ export default function Home(){
         <>
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-sm d-flex justify-content-center" style={{"background-color": "#d6f2c2", height: "100vh"}}>
+                    <div className="col-sm d-flex justify-content-center" style={{"backgroundColor": "#d6f2c2", height: "100vh"}}>
                         <div className="align-self-center">
                             <div>
                                 <h3>Ieškai papildomo darbo?</h3>
@@ -21,7 +21,7 @@ export default function Home(){
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm d-flex justify-content-center" style={{"background-color": "#b9e4f4", height: "100vh"}}>
+                    <div className="col-sm d-flex justify-content-center" style={{"backgroundColor": "#b9e4f4", height: "100vh"}}>
                         <div className="align-self-center">
                             <div>
                                 <h3>Reikia darbuotojų skubiai?</h3>
@@ -37,7 +37,7 @@ export default function Home(){
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm d-flex justify-content-center" style={{"background-color": "#9DD9D2", height: "100vh"}}>
+                    <div className="col-sm d-flex justify-content-center" style={{"backgroundColor": "#9DD9D2", height: "100vh"}}>
                         <div className="align-self-center">
                             <div>
                                 <h3>Esi savo srities specialistas?</h3>

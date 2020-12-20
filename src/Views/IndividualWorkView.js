@@ -1,7 +1,7 @@
 import temp from "../tempWorkersArray";
 import { useParams } from "react-router";
 import { useState } from "react";
-import { Button, Col, Container, Table, ListGroupItem, Modal, Row } from "react-bootstrap";
+import { Button, Col, Container, Table, Modal, Row } from "react-bootstrap";
 import EmployeeReview from '../Components/Employee/EmployeeReview';
 
 export default function IndividualWorkView(props) {
@@ -64,7 +64,7 @@ export default function IndividualWorkView(props) {
                 Palikti atsiliepimą
               </Button>{" "}
               <Button
-                href="individualWorkEdit"
+                href={`/worker/edit/${worker.id}`}
                 className="text-white"
                 variant="warning"
               >
@@ -86,8 +86,8 @@ export default function IndividualWorkView(props) {
               </tr>
             </thead>
             <tbody>
-              { reviews.map((review) => {
-                    return <EmployeeReview data={review}></EmployeeReview>
+              { reviews.map((review, i) => {
+                    return <EmployeeReview data={review} key={i}></EmployeeReview>
                 })
               }
             </tbody>

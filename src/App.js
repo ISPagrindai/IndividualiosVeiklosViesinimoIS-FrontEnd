@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch, useParams } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Navigation from './Components/Navigation'
 import EmployeesView from './Views/EmployeesView';
 import EmployersView from './Views/EmployersView';
@@ -124,6 +124,9 @@ function App() {
           </Route>
           <Route path="/employerReviewForm">
             <EmployerReviewForm></EmployerReviewForm>
+          </Route>
+          <Route exact strict path="/worker/edit/:id">
+            <IndividualWorkForm />
           </Route>
         </Switch>
         </div>

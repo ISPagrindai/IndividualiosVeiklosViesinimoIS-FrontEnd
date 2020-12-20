@@ -60,19 +60,11 @@ export default function IndividualWorkList(props) {
   const [number, setNumber] = useState(null);
 
   const sendCategoryToParent = (index) => {
-    console.log(index);
     setCategory(index);
   }
 
   const sendNumberToParent = (index) => {
-    console.log(index);
     setNumber(index);
-    console.log(temp);
-    console.log(temp.sort(function(a, b){
-      if(a.category < b.category) { return -1; }
-      if(a.category > b.category) { return 1; }
-      return 0;
-    }))
   }
 
   return (
@@ -94,7 +86,7 @@ export default function IndividualWorkList(props) {
               if(a.category > b.category) { return 1; }
               return 0;
             }).filter(w => w.category === category).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
           })
           :
             temp.sort(function(a, b){
@@ -102,7 +94,7 @@ export default function IndividualWorkList(props) {
               if(a.category > b.category) { return 1; }
               return 0;
             }).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id} />;
           })
           : 
           (number === "Z-A" ?
@@ -112,7 +104,7 @@ export default function IndividualWorkList(props) {
               if(a.category > b.category) { return -1; }
               return 0;
             }).filter(w => w.category === category).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
             })
             :
             temp.sort(function(a, b){
@@ -120,21 +112,19 @@ export default function IndividualWorkList(props) {
               if(a.category > b.category) { return -1; }
               return 0;
             }).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
             })
           :
             category ?
             temp.filter(w => w.category === category).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
           })
           :
             temp.map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} />;
+              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id} />;
           })
           ) 
         }
-        
-
         
         </Row>
         </Container>
