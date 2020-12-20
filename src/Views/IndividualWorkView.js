@@ -38,7 +38,7 @@ export default function IndividualWorkView(props) {
         <Col>
           <Col>
           <div className="card my-3">
-            <h5 className="card-header">Veiklos ID: {temp.find(w => w.id == id).veiklosTipas}</h5>
+            <h5 className="card-header">Vartotojo ID: beleka</h5>
             <div className="row">   
               <div className="col-12">
                 <div className="card-title">
@@ -47,19 +47,18 @@ export default function IndividualWorkView(props) {
                     <li className="list-group-item"
                         style={{ color: "#000" }}
                         >
-                      {temp.find(w => w.id == id).fullName}
+                      {/* {temp.find(w => w.id == id).fullName} */}
+                      tipo vardas pavarde
                     </li>
                     <li className="list-group-item">
-                      {temp.find(w => w.id == id).phone}
+                      {/* {temp.find(w => w.id == id).phone} */}
+                      tipo telefonas
                     </li>
                     <li className="list-group-item">
-                      {temp.find(w => w.id == id).email}
+                      {/* {temp.find(w => w.id == id).email} */}
+                      tipo el-pastas
                     </li>
-                    <li className="list-group-item">
-                    <div className="card-text" style={{ height: 150 }}>
-                  {temp.find(w => w.id == id).aprasymas}
-                </div>
-                    </li>
+
                     <br/>
                   </ul>
                 </div>
@@ -69,14 +68,7 @@ export default function IndividualWorkView(props) {
               <Button href="/employeeReview" variant="success">
                 Palikti atsiliepimą
               </Button>{" "}
-              <Button
-                href={`/worker/edit/${temp.find(w => w.id == id).id}`}
-                className="text-white"
-                variant="warning"
-              >
-              Redaguoti
-              </Button>{" "}
-              <Button onClick={props.show} variant="danger" onClick={handleShow}>Ištrinti</Button>{" "}
+      
             </div>
           </div>
           </Col>
@@ -102,15 +94,7 @@ export default function IndividualWorkView(props) {
       </Row>
       </Container> : null }
 
-      <Modal show={show} onHide={() => setShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Ar tikrai norite testi?</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
-        </Modal.Footer>
-      </Modal>
+     
     </>
   );
 }

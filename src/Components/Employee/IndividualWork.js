@@ -1,10 +1,11 @@
-import { Col, Table, Modal, Button } from "react-bootstrap";
+import { Col, Modal, Button } from "react-bootstrap";
 import {useState} from 'react';
-import emailjs from 'emailjs-com';
 import{ init } from 'emailjs-com';
 init("user_eNIaeY7tuSTS9yz3Rtsvq");
 
 export default function IndividualWork(props){
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
 
     return (
     <> 
@@ -44,8 +45,17 @@ export default function IndividualWork(props){
                 <Button href="vipForm" className="my-1" variant="info">
                   Iškelti profilį
                   </Button>{" "}
+
+                  <Button
+                href={`/worker/edit/${props.data.id}`}
+                className="text-white"
+                variant="warning"
+              >
+              Redaguoti
+              </Button>{" "}
+              <Button onClick={props.show} variant="danger" onClick={handleShow}>Ištrinti</Button>{" "}
                   
-                <Button href={`individualWork/${props.data.id}`} variant="success">
+                <Button href={`individualWork/fakeID`} variant="success">
                   Peržiūrėti profilį
                 </Button>{" "}
                 
@@ -59,6 +69,16 @@ export default function IndividualWork(props){
               </div>
             </div>
           </Col>
+
+          <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ar tikrai norite testi?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
+        </Modal.Footer>
+      </Modal>
             
     </>
     );
