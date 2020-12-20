@@ -15,9 +15,6 @@ export default function IndividualWorkView(props) {
     getWorkers().then(response => setTemp(response));
   },[])
 
-  const [worker, setWorker] = useState(null);
-
-
   const reviews = [
     {
       comment: "Labai gerai dirba",
@@ -41,7 +38,7 @@ export default function IndividualWorkView(props) {
         <Col>
           <Col>
           <div className="card my-3">
-            <h5 className="card-header">{temp.find(w => w.id == id).veiklosTipas}</h5>
+            <h5 className="card-header">Veiklos ID: {temp.find(w => w.id == id).veiklosTipas}</h5>
             <div className="row">   
               <div className="col-12">
                 <div className="card-title">
