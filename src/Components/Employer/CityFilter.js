@@ -4,9 +4,9 @@ import ListGroupItem from 'react-bootstrap/ListGroupItem';
 export default function CityFilter(props) {
     const uniqueCities = [];
 
-    props.data.map(job => {
-    if(uniqueCities.indexOf(job.city) === -1)
-    uniqueCities.push(job.city)
+    props.data.forEach(element => {
+      if(!uniqueCities.includes(element.miestas))
+        uniqueCities.push(element.miestas)
     });
 
     const handleClick = (event) => {

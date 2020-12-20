@@ -6,7 +6,7 @@ export default function EmployersView(props){
         <>
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-3 d-flex justify-content-center" style={{"background-color": "#d6f2c2", height: "100vh"}}>
+                    <div className="col-3 d-flex justify-content-center" style={{"backgroundColor": "#d6f2c2", height: "100vh"}}>
                         <div className="align-self-center">
                             <div>
                                 <h1>Įmonės pavadinimas</h1>
@@ -35,7 +35,7 @@ export default function EmployersView(props){
                             </div>
                         </div>
                     </div>
-                    <div className="col-9 d-flex justify-content-center" style={{"background-color": "#9DD9D2", height: "100vh"}}>
+                    <div className="col-9 d-flex justify-content-center" style={{"backgroundColor": "#9DD9D2", height: "100vh"}}>
                         <div className="align-self-center rounded">
                             <JobTable flag={props.flag} />
                         </div>

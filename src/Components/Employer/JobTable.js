@@ -1,50 +1,28 @@
 import { Table, Modal, Button, Container, Col, Row } from "react-bootstrap";
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Job from "./Job";
 import CityFilter from "./CityFilter";
+import {getJobs} from '../../Services/JobService'
 
 export default function JobTable(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [city, setCity] = useState(null);
+  const [temp, setTemp] = useState();
 
-  const temp = [
-    {
-      id: 1,
-      name: "Darbas1",
-      description: "Labai lengvai suderinamas su stujimois darbas",
-      wage: 7.51,
-      city: "Kaunas",
-      address: "Vilniaus g. 1",
-    },
-    {
-      id: 2,
-      name: "Darbas2",
-      description: "Labai lengvai suderinamas su stujimois darbas",
-      wage: 6.31,
-      city: "Vilnius",
-      address: "Geležinio vilko g. 1",
-    },
-    {
-      id: 3,
-      name: "Darbas3",
-      description: "Labai lengvai suderinamas su stujimois darbas",
-      wage: 8.57,
-      city: "Kaunas",
-      address: "Kauno g. 1",
-    },
-  ];
+  useEffect(() =>{
+    getJobs().then(response => setTemp(response));
+  },[])
 
   const sendCityToParent = (index) => {
-    console.log(index);
     setCity(index);
   }
 
   return (
     <>
     <Container>
-      <Row>
+    {temp ?  (<Row>
         <Col>
           <Table striped bordered variant="light">
             <thead>
@@ -58,12 +36,12 @@ export default function JobTable(props) {
             </thead>
             <tbody>
               { city ?
-                temp.filter(j => j.city == city).map((job) => {
-                  return <Job employer={props.flag} show={handleShow} close={handleClose} data={job} />;
+                temp.filter(j => j.miestas === city).map((job) => {
+                  return <Job employer={props.flag} show={handleShow} close={handleClose} data={job} key={job.id} />;
                 })
                 :
                 temp.map((job) => {
-                  return <Job employer={props.flag} show={handleShow} close={handleClose} data={job} />;
+                  return <Job employer={props.flag} show={handleShow} close={handleClose} data={job} key={job.id}/>;
                 })
               }
             </tbody>
@@ -72,7 +50,7 @@ export default function JobTable(props) {
         <Col sm={2}>
           <CityFilter sendCityToParent={sendCityToParent} data={temp}></CityFilter>
         </Col>
-      </Row>
+      </Row>) : null}
 
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
