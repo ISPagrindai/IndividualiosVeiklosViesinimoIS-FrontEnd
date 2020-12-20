@@ -15,20 +15,20 @@ export default function IndividualWork(props){
               <div className="row">      
                 <div className="col-12">
                   <div className="card-title">
-                    <a href="userProfile" style={{ color: "#000" }}></a>
                     <ul className="list-group list-group-flush">
-                      <li className="list-group-item">
-                      </li>
                       <li className="list-group-item"
                           style={{ color: "#000" }}
                           >
                         {props.data.fullName}
+                        tipo vardas pavarde
                       </li>
                       <li className="list-group-item">
                         {props.data.phone}
+                        tipo telefonas
                       </li>
                       <li className="list-group-item">
                         {props.data.email}
+                        tipo email
                       </li>
                       <br/>
                     </ul>

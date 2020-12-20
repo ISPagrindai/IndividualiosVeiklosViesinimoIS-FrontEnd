@@ -20,13 +20,15 @@ export default function IndividualWorkView(props) {
       comment: "Labai gerai dirba",
       rating: 7.8,
       user_id: 2,
-      user_type: "Registruota įmonė"
+      user_type: "Registruota įmonė",
+      job_type: "žydų ieškojimas"
     },
     {
       comment: "Supiso mano audi",
       rating: 3.2,
       user_id: 7,
-      user_type: "Administratorius"
+      user_type: "Administratorius",
+      job_type: "Nacių naikinimas"
     }
   ];
 
@@ -66,6 +68,10 @@ export default function IndividualWorkView(props) {
                       {/* {temp.find(w => w.id == id).email} */}
                       tipo banko saskaita
                     </li>
+                    <li className="list-group-item">
+                      {/* {temp.find(w => w.id == id).email} */}
+                      tipo gimimo metai
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -87,6 +93,7 @@ export default function IndividualWorkView(props) {
                 <th>Įvertinimas</th>
                 <th>Siuntėjo tipas</th>
                 <th>Siuntėjo ID</th>
+                <th>Atliktas darbas</th>
               </tr>
             </thead>
             <tbody>
