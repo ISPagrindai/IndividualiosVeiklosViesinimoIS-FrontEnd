@@ -8,11 +8,13 @@ export function Login(login){
             if(response){
                 cookie.set('TOKEN', response.token);
                 setAuthorizationToken(response.token);
+                NotificationService.success("Sėkmingai prisijungėte")
                 return true;
             }
+            NotificationService.error(errorToString(response));
             return false;
         })
-        .catch(error => console.log(error));
+        .catch(error => NotificationService.error(errorToString(error)));
 }
 export function RegisterUserService(data){
     return post('/Users/registerCompany', data)
