@@ -58,8 +58,14 @@ export default function IndividualWorkView(props) {
                       {/* {temp.find(w => w.id == id).email} */}
                       tipo el-pastas
                     </li>
-
-                    <br/>
+                    <li className="list-group-item">
+                      {/* {temp.find(w => w.id == id).email} */}
+                      tipo lytis
+                    </li>
+                    <li className="list-group-item">
+                      {/* {temp.find(w => w.id == id).email} */}
+                      tipo banko saskaita
+                    </li>
                   </ul>
                 </div>
               </div>
