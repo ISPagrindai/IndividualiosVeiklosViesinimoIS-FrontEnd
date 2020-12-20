@@ -24,9 +24,9 @@ export default function CategoryFilter(props) {
         <ListGroupItem disabled action style={{backgroundColor: "#5d4037", color: "white"}}>Kategorijos</ListGroupItem>
         <ListGroupItem action onClick={handleClickAll}>Visos</ListGroupItem>
         {
-          uniqueCategories.map((category) => {
+          uniqueCategories.map((category, i) => {
             return (
-                <ListGroupItem value={category} action onClick={handleClick}>{category}</ListGroupItem>
+                <ListGroupItem value={category} action onClick={handleClick} key={i}>{category}</ListGroupItem>
             )
           })
         }
