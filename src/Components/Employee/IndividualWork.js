@@ -10,7 +10,7 @@ export default function IndividualWork(props){
     <> 
           <Col>
             <div className="card my-3">
-              <h5 className="card-header">{props.data.category}</h5>
+              <h5 className="card-header">Veikos ID: {props.data.veiklosTipas}</h5>
               <div className="row">      
                 <div className="col-12">
                   <div className="card-title">
@@ -35,7 +35,7 @@ export default function IndividualWork(props){
                 </div>
                 <div className="card-body">
                   <div className="card-text" style={{ height: 150 }}>
-                    {props.data.description}
+                    {props.data.aprasymas}
                   </div>
                 </div>
               </div>

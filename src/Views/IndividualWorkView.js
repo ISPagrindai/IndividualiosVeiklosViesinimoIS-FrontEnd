@@ -1,14 +1,22 @@
-import temp from "../tempWorkersArray";
 import { useParams } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Col, Container, Table, Modal, Row } from "react-bootstrap";
 import EmployeeReview from '../Components/Employee/EmployeeReview';
+import {getWorkers} from '../Services/WorkerService';
 
 export default function IndividualWorkView(props) {
   let {id} = useParams();
-  const [worker, setWorker] = useState(temp.find(w => w.id == id));
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
+
+  const [temp, setTemp] = useState();
+
+  useEffect(() =>{
+    getWorkers().then(response => setTemp(response));
+  },[])
+
+  const [worker, setWorker] = useState(null);
+
 
   const reviews = [
     {
@@ -27,12 +35,13 @@ export default function IndividualWorkView(props) {
 
   return (
     <>
+    { temp ?
     <Container>
       <Row>
         <Col>
           <Col>
           <div className="card my-3">
-            <h5 className="card-header">{worker.category}</h5>
+            <h5 className="card-header">{temp.find(w => w.id == id).veiklosTipas}</h5>
             <div className="row">   
               <div className="col-12">
                 <div className="card-title">
@@ -41,17 +50,17 @@ export default function IndividualWorkView(props) {
                     <li className="list-group-item"
                         style={{ color: "#000" }}
                         >
-                      {worker.fullName}
+                      {temp.find(w => w.id == id).fullName}
                     </li>
                     <li className="list-group-item">
-                      {worker.phone}
+                      {temp.find(w => w.id == id).phone}
                     </li>
                     <li className="list-group-item">
-                      {worker.email}
+                      {temp.find(w => w.id == id).email}
                     </li>
                     <li className="list-group-item">
                     <div className="card-text" style={{ height: 150 }}>
-                  {worker.description}
+                  {temp.find(w => w.id == id).aprasymas}
                 </div>
                     </li>
                     <br/>
@@ -64,7 +73,7 @@ export default function IndividualWorkView(props) {
                 Palikti atsiliepimą
               </Button>{" "}
               <Button
-                href={`/worker/edit/${worker.id}`}
+                href={`/worker/edit/${temp.find(w => w.id == id).id}`}
                 className="text-white"
                 variant="warning"
               >
@@ -94,18 +103,7 @@ export default function IndividualWorkView(props) {
           </Table>
         </Col>
       </Row>
-       
-      </Container>
-
-      <Modal show={show} onHide={() => setShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Ar tikrai norite testi?</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
-        </Modal.Footer>
-      </Modal>
+      </Container> : null }
 
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
