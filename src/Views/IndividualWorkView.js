@@ -1,38 +1,46 @@
-import temp from "../tempWorkersArray";
 import { useParams } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Col, Container, Table, Modal, Row } from "react-bootstrap";
 import EmployeeReview from '../Components/Employee/EmployeeReview';
+import {getWorkers} from '../Services/WorkerService';
 
 export default function IndividualWorkView(props) {
   let {id} = useParams();
-  const [worker, setWorker] = useState(temp.find(w => w.id == id));
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
+
+  const [temp, setTemp] = useState();
+
+  useEffect(() =>{
+    getWorkers().then(response => setTemp(response));
+  },[])
 
   const reviews = [
     {
       comment: "Labai gerai dirba",
       rating: 7.8,
       user_id: 2,
-      user_type: "Registruota įmonė"
+      user_type: "Registruota įmonė",
+      job_type: "žydų ieškojimas"
     },
     {
       comment: "Supiso mano audi",
       rating: 3.2,
       user_id: 7,
-      user_type: "Administratorius"
+      user_type: "Administratorius",
+      job_type: "Nacių naikinimas"
     }
   ];
 
   return (
     <>
+    { temp ?
     <Container>
       <Row>
         <Col>
           <Col>
           <div className="card my-3">
-            <h5 className="card-header">{worker.category}</h5>
+            <h5 className="card-header">Vartotojo ID: beleka</h5>
             <div className="row">   
               <div className="col-12">
                 <div className="card-title">
@@ -41,20 +49,29 @@ export default function IndividualWorkView(props) {
                     <li className="list-group-item"
                         style={{ color: "#000" }}
                         >
-                      {worker.fullName}
+                      {/* {temp.find(w => w.id == id).fullName} */}
+                      tipo vardas pavarde
                     </li>
                     <li className="list-group-item">
-                      {worker.phone}
+                      {/* {temp.find(w => w.id == id).phone} */}
+                      tipo telefonas
                     </li>
                     <li className="list-group-item">
-                      {worker.email}
+                      {/* {temp.find(w => w.id == id).email} */}
+                      tipo el-pastas
                     </li>
                     <li className="list-group-item">
-                    <div className="card-text" style={{ height: 150 }}>
-                  {worker.description}
-                </div>
+                      {/* {temp.find(w => w.id == id).email} */}
+                      tipo lytis
                     </li>
-                    <br/>
+                    <li className="list-group-item">
+                      {/* {temp.find(w => w.id == id).email} */}
+                      tipo banko saskaita
+                    </li>
+                    <li className="list-group-item">
+                      {/* {temp.find(w => w.id == id).email} */}
+                      tipo gimimo metai
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -63,14 +80,7 @@ export default function IndividualWorkView(props) {
               <Button href="/employeeReview" variant="success">
                 Palikti atsiliepimą
               </Button>{" "}
-              <Button
-                href={`/worker/edit/${worker.id}`}
-                className="text-white"
-                variant="warning"
-              >
-              Redaguoti
-              </Button>{" "}
-              <Button onClick={props.show} variant="danger" onClick={handleShow}>Ištrinti</Button>{" "}
+      
             </div>
           </div>
           </Col>
@@ -83,6 +93,7 @@ export default function IndividualWorkView(props) {
                 <th>Įvertinimas</th>
                 <th>Siuntėjo tipas</th>
                 <th>Siuntėjo ID</th>
+                <th>Atliktas darbas</th>
               </tr>
             </thead>
             <tbody>
@@ -94,28 +105,9 @@ export default function IndividualWorkView(props) {
           </Table>
         </Col>
       </Row>
-       
-      </Container>
+      </Container> : null }
 
-      <Modal show={show} onHide={() => setShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Ar tikrai norite testi?</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={show} onHide={() => setShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Ar tikrai norite testi?</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
-        </Modal.Footer>
-      </Modal>
+     
     </>
   );
 }
