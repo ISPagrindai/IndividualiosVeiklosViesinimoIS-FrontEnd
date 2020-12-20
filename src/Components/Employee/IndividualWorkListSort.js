@@ -18,9 +18,9 @@ export default function IndividualWorkListSort(props) {
         <ListGroupItem disabled action style={{backgroundColor: "#5d4037", color: "white"}}>Rikiavimas</ListGroupItem>
         <ListGroupItem action onClick={handleClickAll}>Pradinis</ListGroupItem>
         {
-          numberSort.map((number) => {
+          numberSort.map((number, i) => {
             return (
-                <ListGroupItem value={number} action onClick={handleClick}>{number}</ListGroupItem>
+                <ListGroupItem value={number} action onClick={handleClick} key={i}>{number}</ListGroupItem>
             )
           })
         }
