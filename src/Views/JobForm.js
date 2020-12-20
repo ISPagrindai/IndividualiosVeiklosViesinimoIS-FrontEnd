@@ -1,12 +1,21 @@
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import CurrencyInput from 'react-currency-input-field';
+import {useState, useEffect} from 'react'
+import {getJobTypes} from '../Services/HelperService';
 
 export default function JobForm() {
   const { handleSubmit, register, errors, control } = useForm();
+  const [types, setTypes] = useState();
   const onSubmit = (values) => {
     console.log(values);
   };
+
+  useEffect(() =>{
+    getJobTypes().then(response => {
+      setTypes(response)
+    })
+  }, [])
 
   return (
     <div
@@ -104,7 +113,15 @@ export default function JobForm() {
             />
             {errors.address && <span style={{"color": "red"}}>{errors.address.message}</span>}
           </div>
-          
+
+          <div className="form-group">
+          <label htmlFor="tipas">Veiklos tipas</label>
+            <select className="form-control" id="tipas" name="tipas" ref={register({required: "*Privalomas laukas"})}>
+              <option value="">Pasirinkite tipą</option>
+              {types ? types.map(type => (<option value={type.id}>{type.pavadinimas}</option>)) : null}
+            </select>
+            {errors.tipas && <span style={{"color": "red"}}>{errors.tipas.message}</span>} 
+          </div>          
 
           <Button type="submit" variant="secondary">
             Kurti
