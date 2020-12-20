@@ -1,10 +1,10 @@
-import JobTable from '../../Components/Employer/JobTable'
+import AdminJobTable from '../../Components/AdminComponents/AdminJobTable'
 
 export default function JobsView(){
     return(
         <>
             <div className="align-self-center rounded">
-                <JobTable flag={true} />
+                <AdminJobTable flag={true} />
             </div>
         </>
     );
