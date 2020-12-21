@@ -61,7 +61,7 @@ export default function IndividualWorkView(props) {
                   </div>
                 </div>
                 <div className="card-footer">
-              <Button className="my-1" variant="success" href={`/individualWorkForm/${profile.id}`}>
+              <Button className="my-1" variant="success" href={`/individualWorkForm`}>
                 Sukurti veiklą
               </Button>{" "}
             </div>

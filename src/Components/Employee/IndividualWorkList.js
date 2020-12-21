@@ -13,6 +13,10 @@ export default function IndividualWorkList(props) {
   const handleShow = () => setShow(true);
   const [temp, setTemp] = useState();
   const [workTypes, setWorkTypes] = useState();
+  const [id, setId] = useState();
+  const [currentId, setCurrentId] = useState();
+  const [category, setCategory] = useState(null);
+  const [number, setNumber] = useState(null);
 
   useEffect(() =>{
     getWorkTypes().then(response => setWorkTypes(response));
@@ -20,28 +24,17 @@ export default function IndividualWorkList(props) {
 
   useEffect(() =>{
     getWorkers().then(response => setTemp(response));
-  })
-
-
-  const [id, setId] = useState();
-  const [currentId, setCurrentId] = useState();
+  }, [])
   
   const deleteHandler = () =>{
     deleteWork(id).then(() => {
-      console.log(temp);
-      //temp = temp.filter(w => w.id != id);
+      setTemp(temp.filter(w => w.id !== id));
       handleClose();
     })
   }
-
-
-   useEffect(() =>{
-      getCurrentUser().then(response => setCurrentId(response))
-    console.log(currentId);
+  useEffect(() =>{
+    getCurrentUser().then(response => setCurrentId(response))
   }, [])
-
-  const [category, setCategory] = useState(null);
-  const [number, setNumber] = useState(null);
 
   const sendCategoryToParent = (index) => {
     setCategory(index);
@@ -64,7 +57,7 @@ export default function IndividualWorkList(props) {
       </div>
 
       <div className="col">
-      <Container fluid>
+      {currentId ? (<Container fluid>
           <Row xs={1} sm={1} md={1} lg={2} xl={3}>
           {number === "A-Z" ?
             category ?
@@ -135,7 +128,7 @@ export default function IndividualWorkList(props) {
           }
           
           </Row>
-          </Container>
+          </Container>) : null}
       </div>
       </Row> 
     : null }

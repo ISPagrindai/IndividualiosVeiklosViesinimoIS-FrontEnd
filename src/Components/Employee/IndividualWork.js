@@ -10,19 +10,19 @@ init("user_eNIaeY7tuSTS9yz3Rtsvq");
 
 export default function IndividualWork(props){
   const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
+
 
   useEffect(() =>{
     getProfile(props.data.vartotojoId).then(response => setProfile(response));
-  },[])
+  },[props.data.vartotojoId])
 
   
   useEffect(() =>{
     getWorkTypes().then(response => setWorkTypes(response));
   },[])
 
-  const deleteHandler = () => {
-    handleShow();
+  const myDeleteHandler = () => {
+    setShow(true)
     props.setId(props.data.id);
   }
 
@@ -64,13 +64,13 @@ export default function IndividualWork(props){
                   </Button>{" "}
 
                   <Button
-                href={`/worker/edit/${props.data.id}`}
+                href={`/individualWorkForm/edit/${props.data.id}`}
                 className="text-white"
                 variant="warning"
               >
               Redaguoti
               </Button>{" "}
-              {props.currentId == props.data.vartotojoId ? <Button onClick={props.show} variant="danger" onClick={deleteHandler}>Ištrinti</Button> : null}
+              {props.currentId.response === props.data.vartotojoId ? <Button variant="danger" onClick={myDeleteHandler}>Ištrinti</Button> : null}
                   
                 <Button href={`individualWork/${profile.id}`} variant="success">
                   Peržiūrėti profilį
