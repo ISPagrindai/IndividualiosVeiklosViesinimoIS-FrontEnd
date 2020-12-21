@@ -24,6 +24,9 @@ export default function CandidateTable(props) {
       setShow(false)
     })
   }
+  const handleConfirm = () => {
+    
+  }
 
   return (
     <>
@@ -43,7 +46,7 @@ export default function CandidateTable(props) {
             })}
         </tbody>) : null}
       </Table>
-      <Button variant="secondary" onClick={handleShow}>Patvirtinti kandidatūrą</Button>
+      <Button variant="secondary" onClick={handleConfirm}>Patvirtinti kandidatūrą</Button>
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Ar tikrai norite testi?</Modal.Title>
