@@ -12,15 +12,14 @@ export default function NewEmployerTable(props) {
 
    useEffect(() =>{
     getNewEmpolyers().then(response => setTemp(response));
-   })
+   }, [])
+
    const unfreezeHandler = () => {
      confirmEmployer({ arUzsaldytas: false, idImone: id }).then(() => {
-       setShow(false);
        setTemp(temp.filter(i => i.id !== id));  
+       handleClose();
      } )
   }
-  
-
 
   return (
     <>

@@ -1,20 +1,9 @@
 import Button from "react-bootstrap/Button";
-import {useState, useEffect} from 'react'
-import {getNewEmpolyers, confirmEmployer} from '../../Services/NewEmployerService'
 
 export default function NewEmployer(props) { 
-   const [show, setShow] = useState(false);
-   const [temp, setTemp] = useState();
-  const [id, setId] = useState();
-
-   useEffect(() =>{
-    getNewEmpolyers().then(response => setTemp(response));
-   }, [])
   const unfreezeHandler = () => {
-     confirmEmployer({ arUzsaldytas: false, idImone: id }).then(() => {
-       setShow(false);
-       setTemp(temp.filter(i => i.id !== id));  
-     } )
+     props.setId(props.data.id)
+     props.show()
   }
  
   return (
@@ -32,7 +21,7 @@ export default function NewEmployer(props) {
       {props.flag ? (
         <td>                  
           <Button variant="secondary" onClick={unfreezeHandler}>
-            Patvirtinti
+            Atšaldyti
           </Button>
         </td>
       ) : (
