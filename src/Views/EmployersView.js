@@ -36,7 +36,7 @@ export default function EmployersView(props){
                         </div>
                     </div>
                     <div className="col-9 d-flex justify-content-center" style={{"backgroundColor": "#9DD9D2", height: "100vh"}}>
-                        <div className="align-self-center rounded">
+                        <div className="">
                             <JobTable flag={props.flag} />
                         </div>
                     </div>
