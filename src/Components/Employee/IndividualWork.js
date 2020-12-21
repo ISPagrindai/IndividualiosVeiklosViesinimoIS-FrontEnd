@@ -71,7 +71,7 @@ export default function IndividualWork(props){
                   Peržiūrėti profilį
                 </Button>{" "}
 
-                <Button href="/employeeReview" variant="success">
+                <Button href={`/employeeReview/${profile.id}/work/${props.data.vartotojoId}`} variant="success">
                 Palikti atsiliepimą apie veiklą
               </Button>{" "}
                 
