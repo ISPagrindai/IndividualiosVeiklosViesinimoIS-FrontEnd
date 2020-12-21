@@ -107,7 +107,7 @@ function App() {
                 <Route path="/individualWorkEdit">
                   <IndividualWorkEdit />
                 </Route>
-                <Route path="/individualWorkForm">
+                <Route exact string path="/individualWorkForm/:id">
                   <IndividualWorkForm />
                 </Route>
                 <Route path="/jobHistory">

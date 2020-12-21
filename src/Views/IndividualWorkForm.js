@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import CurrencyInput from 'react-currency-input-field';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import { newWorker } from '../Services/WorkerService';
 import { getJobTypes } from '../Services/HelperService';
@@ -10,13 +10,13 @@ export default function UserProfile() {
 
     const [types, setTypes] = useState();
     const history = useHistory();
+    const {id} = useParams();
 
 
   const { handleSubmit, register, errors, control } = useForm();
 
   const onSubmit = (values) => {
     newWorker(values).then(() => {
-        console.log(values)
         history.push("/individualWorkList");
       });
   };
@@ -32,6 +32,7 @@ export default function UserProfile() {
       <> { types ?
           <div className="container my-5 border py-5 px-5">
             <form onSubmit={handleSubmit(onSubmit)}>
+            {id ? (<input type="hidden" value={id} name="id" ref={register}/>) : null}
                 <div className="row">
                     <div className="col">
                         <h3>Veiklos duomenys</h3>

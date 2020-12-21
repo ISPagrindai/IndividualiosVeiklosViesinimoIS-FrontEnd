@@ -13,13 +13,17 @@ export default function IndividualWork(props){
   const handleShow = () => setShow(true);
 
   useEffect(() =>{
-    getProfile(props.data.id).then(response => setProfile(response));
+    getProfile(props.data.vartotojoId).then(response => setProfile(response));
   },[])
 
   
   useEffect(() =>{
     getWorkTypes().then(response => setWorkTypes(response));
   },[])
+
+  const userId = () => {
+    
+  }
 
   const [profile, setProfile] = useState();
   const [workTypes, setWorkTypes] = useState();
