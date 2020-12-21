@@ -1,16 +1,25 @@
 import { Col, Modal, Button } from "react-bootstrap";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import{ init } from 'emailjs-com';
+import {getProfile} from '../../Services/ProfileService';
 init("user_eNIaeY7tuSTS9yz3Rtsvq");
+
+
 
 export default function IndividualWork(props){
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
 
+  useEffect(() =>{
+    getProfile(props.data.id).then(response => setProfile(response));
+  },[])
+
+  const [profile, setProfile] = useState();
+
     return (
-    <> 
+    <> {profile ?
           <Col>
-            <div className="card my-3">
+            <div className="card my-4">
               <h5 className="card-header">Veikos ID: {props.data.veiklosTipas}</h5>
               <div className="row">      
                 <div className="col-12">
@@ -19,12 +28,7 @@ export default function IndividualWork(props){
                       <li className="list-group-item"
                           style={{ color: "#000" }}
                           >
-                        {props.data.fullName}
-                        tipo vardas pavarde
-                      </li>
-                      <li className="list-group-item">
-                        {props.data.phone}
-                        tipo telefonas
+                        {profile.vardas} {profile.pavarde}
                       </li>
                       <li className="list-group-item">
                         {props.data.email}
@@ -55,9 +59,13 @@ export default function IndividualWork(props){
               </Button>{" "}
               <Button onClick={props.show} variant="danger" onClick={handleShow}>Ištrinti</Button>{" "}
                   
-                <Button href={`individualWork/fakeID`} variant="success">
+                <Button href={`individualWork/${profile.id}`} variant="success">
                   Peržiūrėti profilį
                 </Button>{" "}
+
+                <Button href="/employeeReview" variant="success">
+                Palikti atsiliepimą apie veiklą
+              </Button>{" "}
                 
                 <Button href="employeeOrder" className="my-1" variant="dark">
                   Užsisakyti darbuotoją !
@@ -69,6 +77,7 @@ export default function IndividualWork(props){
               </div>
             </div>
           </Col>
+          : null }
 
           <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>

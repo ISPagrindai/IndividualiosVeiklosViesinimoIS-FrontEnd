@@ -10,5 +10,6 @@ export default class TemporaryWorker{
         this.grafikas = entity.grafikas;
         this.miestas = entity.miestas
         this.veiklosTipas = entity.fkVeiklosTipasidVeiklosTipas;
+        this.vartotojoId = entity.fkVartotojasidVartotojas;
     }
 }

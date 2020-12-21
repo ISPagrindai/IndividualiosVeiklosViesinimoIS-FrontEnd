@@ -3,19 +3,18 @@ import {useState, useEffect} from 'react';
 import emailjs from 'emailjs-com';
 import{ init } from 'emailjs-com';
 import { useParams } from "react-router";
-import temp from '../tempWorkersArray';
-import { getWorkers } from '../Services/WorkerService';
+import { getProfile } from '../Services/ProfileService';
 
 init("user_eNIaeY7tuSTS9yz3Rtsvq");
 
 export default function AutomaticOrderForm(){
     let { id } = useParams();
 
-    const [temp, setTemp] = useState();
-
     useEffect(() =>{
-      getWorkers().then(response => setTemp(response));
-    },[])
+        getProfile(id).then(response => setProfile(response));
+      },[])
+    
+      const [profile, setProfile] = useState();
 
     function sendEmail(e) {
         e.preventDefault();
@@ -30,24 +29,15 @@ export default function AutomaticOrderForm(){
     
       return ( 
         <>
-        { temp ?
+        { profile ?
             <Container className="my-5 border">
             <Form className="my-3 mx-3" onSubmit={sendEmail}>
-                <Form.Group as={Row} controlId="formPlaintextEmail">
-                <Form.Label column sm="2">
-                Darbas
-                </Form.Label>
-                <Col sm="10">
-                <Form.Control plaintext readOnly name="worker_category" defaultValue={temp.find(w => w.id == id).veiklosTipas} />
-                </Col>
-                </Form.Group>
-
                 <Form.Group as={Row} controlId="formPlaintextEmail">
                 <Form.Label column sm="2">
                 Darbuotojas
                 </Form.Label>
                 <Col sm="10">
-                <Form.Control plaintext readOnly name="worker_fullname" defaultValue={temp.find(w => w.id == id).fullName} />
+                <Form.Control plaintext readOnly name="worker_fullname" defaultValue={profile.vardas + " " + profile.pavarde} />
                 </Col>
                 </Form.Group>
 
@@ -56,7 +46,7 @@ export default function AutomaticOrderForm(){
                 Darbuotojo el-paštas
                 </Form.Label>
                 <Col sm="10">
-                <Form.Control plaintext readOnly name="worker_email" defaultValue={temp.find(w => w.id == id).email} />
+                <Form.Control plaintext readOnly name="worker_email" defaultValue="tipo el pastas" />
                 </Col>
                 </Form.Group>
 
@@ -66,6 +56,15 @@ export default function AutomaticOrderForm(){
                 </Form.Label>
                 <Col sm="10">
                 <Form.Control type="text" name="employer_email" placeholder="užsakovas@gmail.com" />
+                </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPlaintextPassword">
+                <Form.Label column sm="2">
+                Darbo aprašymas
+                </Form.Label>
+                <Col sm="10">
+                <Form.Control type="text" name="description"/>
                 </Col>
                 </Form.Group>
 

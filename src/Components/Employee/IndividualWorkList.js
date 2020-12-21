@@ -15,6 +15,8 @@ export default function IndividualWorkList(props) {
     getWorkers().then(response => setTemp(response));
   },[])
 
+
+
   const [category, setCategory] = useState(null);
   const [number, setNumber] = useState(null);
 
@@ -26,12 +28,10 @@ export default function IndividualWorkList(props) {
     setNumber(index);
   }
 
-  {}
-
   return (
     <>
     {temp ? <Row>
-    <div className="col-sm-3 col-md-3 col-lg-2 mx-3">
+    <div className="col-sm-3 col-md-3 col-lg-2 my-5 mx-5">
         <CategoryFilter sendCategoryToParent={sendCategoryToParent} data={temp}></CategoryFilter>
         < br/>
         <IndividualWorkListSort sendNumberToParent={sendNumberToParent} data={temp}></IndividualWorkListSort>
