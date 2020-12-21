@@ -4,7 +4,6 @@ import IndividualWork from "./IndividualWork";
 import CategoryFilter from "./CategoryFilter";
 import IndividualWorkListSort from "./IndividualWorkListSort";
 import {getWorkers} from '../../Services//WorkerService';
-import {getProfile} from '../../Services/ProfileService';
 import {getWorkTypes} from '../../Services/WorkerService';
 
 export default function IndividualWorkList(props) {
@@ -12,7 +11,6 @@ export default function IndividualWorkList(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [temp, setTemp] = useState();
-  const [profiles, setProfiles] = useState();
   const [workTypes, setWorkTypes] = useState();
 
   useEffect(() =>{
@@ -23,9 +21,6 @@ export default function IndividualWorkList(props) {
     getWorkers().then(response => setTemp(response));
   },[])
 
-  useEffect(() =>{
-    getProfile(1).then(response => setProfiles(response));
-  },[])
 
   const [category, setCategory] = useState(null);
   const [number, setNumber] = useState(null);
@@ -40,8 +35,7 @@ export default function IndividualWorkList(props) {
 
   return (
     <>
-    {temp && workTypes ? <Row>     {console.log(temp.map(w => w = w.atsiliepimai))}
-
+    {temp && workTypes ? <Row> 
     <div className="col-sm-3 col-md-3 col-lg-2 my-5 mx-5">
         <CategoryFilter sendCategoryToParent={sendCategoryToParent} data={temp}></CategoryFilter>
         < br/>
@@ -55,12 +49,12 @@ export default function IndividualWorkList(props) {
         <Row xs={1} sm={1} md={1} lg={2} xl={3}>
         {number === "A-Z" ?
           category ?
-            temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).length > 0 ?
+            temp.filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas = category).id).length > 0 ?
               temp.sort(function(a, b){
-                if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas < workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return -1; }
-                if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas > workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return 1; }
+                if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas < workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return -1; }
+                if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas > workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return 1; }
                 return 0;
-              }).filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).map((work) => {
+              }).filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).map((work) => {
                 return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
             }) 
             : 
@@ -69,8 +63,8 @@ export default function IndividualWorkList(props) {
             </Alert>
           :
             temp.sort(function(a, b){
-              if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas < workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return -1; }
-              if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas > workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return 1; }
+              if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas < workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return -1; }
+              if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas > workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return 1; }
               return 0;
             }).map((work) => {
               return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id} />;
@@ -78,12 +72,12 @@ export default function IndividualWorkList(props) {
           : 
           (number === "Z-A" ?
             category ? 
-              temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).length > 0 ?
+              temp.filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).length > 0 ?
                 temp.sort(function(a, b){
-                  if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas < workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return 1; }
-                  if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas > workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return -1; }
+                  if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas < workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return 1; }
+                  if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas > workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return -1; }
                   return 0;
-                }).filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).map((work) => {
+                }).filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).map((work) => {
                   return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
                 })
                 :
@@ -92,16 +86,16 @@ export default function IndividualWorkList(props) {
                 </Alert>
               :
               temp.sort(function(a, b){
-                if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas < workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return 1; }
-                if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas > workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return -1; }
+                if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas < workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return 1; }
+                if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas > workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return -1; }
                 return 0;
               }).map((work) => {
                 return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
               })
           :
             category ?
-              temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).length > 0 ?
-              temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).map((work) => {
+              temp.filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).length > 0 ?
+              temp.filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).map((work) => {
                 return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
             })
             :
