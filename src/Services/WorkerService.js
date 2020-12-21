@@ -26,3 +26,14 @@ export function getWorkTypes(){
     console.log(error);
   });
 }
+
+// export function newReview(data){
+//   data.rating = parseFloat(data.rating)
+//   return post('/Atsiliepimas', data)
+//   .then((response) => {
+//     NotificationService.success("Darbo pasūlymas sukurtas")
+//   })
+//   .catch((error) => {
+//     NotificationService.error(errorToString(error));
+//   });
+// }

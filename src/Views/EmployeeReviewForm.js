@@ -1,12 +1,25 @@
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import CurrencyInput from 'react-currency-input-field';
+import { useParams, useHistory} from "react-router";
+import {createReviewOnWorker} from '../Services/ReviewService';
 
 export default function Review() {
+
   const { handleSubmit, register, errors, control } = useForm();
+
+  const history = useHistory();
+
   const onSubmit = (values) => {
-    console.log(values);
-  };
+    createReviewOnWorker(values).then(() => {
+        history.push("/individualWorkList");
+      });
+    } 
+
+
+  let {workId} = useParams();
+
+  
 
   return (
           <div className="container my-5">
@@ -15,25 +28,27 @@ export default function Review() {
                     <div className="card">
                         <h4 className="card-header">Atsiliepimas apie individualią veiklą</h4> 
                         <form onSubmit={handleSubmit(onSubmit)}>
+                        {workId ? (<input type="hidden" value={workId} name="individualiVeiklaId" ref={register}/>) : null}
+                        
                             <div className="row justify-content-center">
                                 <div className="form-group">
-                                    <label className="mt-2" htmlFor="comment">Komentaras</label>
+                                    <label className="mt-2" htmlFor="komentaras">Komentaras</label>
                                     <textarea
-                                    id="comment"
-                                    name="comment"
+                                    id="komentaras"
+                                    name="komentaras"
                                     style={{ height: "15vh" }}
                                     className="form-control"
                                     ref={register({
                                         required: "*Privalomas laukas",
                                     })}
                                     />
-                                    {errors.comment && <span style={{"color": "red"}}>{errors.comment.message}</span>}
+                                    {errors.komentaras && <span style={{"color": "red"}}>{errors.komentaras.message}</span>}
                                 </div>
                             </div>
                                 
                             <div className="row justify-content-center">
                                 <div className="form-group">
-                                    <label htmlFor="rating">Įvertinimas:</label>
+                                    <label htmlFor="ivertinimas">Įvertinimas:</label>
                                     <Controller
                                         render={({onChange, onBlur}) => (
                                         <CurrencyInput                 
@@ -43,8 +58,8 @@ export default function Review() {
                                         decimalsLimit={1}
                                         onChange={(e) => onChange(e)}
                                         />)}
-                                        id="rating"
-                                        name="rating"
+                                        id="ivertinimas"
+                                        name="ivertinimas"
                                         rules={{
                                             required: '*Privalomas laukas', 
                                             min: {
@@ -58,7 +73,7 @@ export default function Review() {
                                         control={control}
                                         defaultValue={"-1"}
                                     />
-                                    {errors.rating && <span style={{"color": "red"}}>{errors.rating.message}</span>}
+                                    {errors.ivertinimas && <span style={{"color": "red"}}>{errors.ivertinimas.message}</span>}
                                 </div>
                             </div>
                             <div className="row justify-content-center">

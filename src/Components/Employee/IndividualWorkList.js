@@ -40,7 +40,8 @@ export default function IndividualWorkList(props) {
 
   return (
     <>
-    {temp && workTypes ? <Row>
+    {temp && workTypes ? <Row>     {console.log(temp.map(w => w = w.atsiliepimai))}
+
     <div className="col-sm-3 col-md-3 col-lg-2 my-5 mx-5">
         <CategoryFilter sendCategoryToParent={sendCategoryToParent} data={temp}></CategoryFilter>
         < br/>

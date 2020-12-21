@@ -89,7 +89,7 @@ function App() {
                 <Route path="/userProfile">
                   <UserProfile />
                 </Route>
-                <Route path="/employeeReview">
+                <Route exact strict path="/employeeReview/:userId/work/:workId">
                   <EmployeeReviewForm />
                 </Route>
                 <Route exact strict path="/job/edit/:id">

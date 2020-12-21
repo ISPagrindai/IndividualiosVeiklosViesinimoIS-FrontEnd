@@ -1,4 +1,4 @@
-import {errorToString, get} from './restApiService'
+import {errorToString, get, post} from './restApiService'
 import TemporaryProfile from '../Models/TemporaryProfile'
 import NotificationService from './NotificationService';
 

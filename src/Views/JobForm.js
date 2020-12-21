@@ -14,6 +14,7 @@ export default function JobForm() {
   const [uzmokestis, setUzmokestis] = useState();
   const history = useHistory();
   const miestai = ["Vilnius", "Kaunas", "Klaipėda", "Šiauliai", "Panevežys", "Alytus", "Marijampolė"];
+  
   const onSubmit = (values) => {
     values.uzmokestis = uzmokestis;
     if (values.id) {

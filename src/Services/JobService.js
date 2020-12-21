@@ -13,6 +13,7 @@ export function getJobs(){
       NotificationService.error(errorToString(error));
     });
 }
+
 export function getJob(id){
   return get('/Imones/darbas/', id)
   .then((response) => {
@@ -25,6 +26,9 @@ export function getJob(id){
 export function newJob(data){
   data.tipas = parseInt(data.tipas)
   data.uzmokestis = parseFloat(data.uzmokestis)
+
+  console.log(data)
+
   return post('/Imones', data)
   .then((response) => {
     NotificationService.success("Darbo pasūlymas sukurtas")

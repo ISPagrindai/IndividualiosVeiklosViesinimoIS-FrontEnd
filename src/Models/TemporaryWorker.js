@@ -11,5 +11,6 @@ export default class TemporaryWorker{
         this.miestas = entity.miestas
         this.veiklosTipas = entity.fkVeiklosTipasidVeiklosTipas;
         this.vartotojoId = entity.fkVartotojasidVartotojas;
+        this.atsiliepimai = entity.atsiliepimas
     }
 }
