@@ -1,13 +1,16 @@
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
+import {getWorkTypes} from '../../Services/WorkerService';
+import {useState, useEffect} from 'react';
+
 
 export default function CategoryFilter(props) {
-    const uniqueCategories = [];
+  const [workTypes, setWorkTypes] = useState();
 
-    props.data.map(work => {
-    if(uniqueCategories.indexOf(work.category) === -1)
-        uniqueCategories.push(work.category)
-    });
+
+    useEffect(() =>{
+      getWorkTypes().then(response => setWorkTypes(response));
+    },[])
 
     const handleClick = (event) => {
       props.sendCategoryToParent(event.target.value);
@@ -19,18 +22,19 @@ export default function CategoryFilter(props) {
 
 
     return (
-    <>
+    <> { workTypes ?
         <ListGroup>
         <ListGroupItem disabled action style={{backgroundColor: "#5d4037", color: "white"}}>Kategorijos</ListGroupItem>
         <ListGroupItem action onClick={handleClickAll}>Visos</ListGroupItem>
         {
-          uniqueCategories.map((category, i) => {
+          workTypes.map((category, i) => {
             return (
-                <ListGroupItem value={category} action onClick={handleClick} key={i}>{category}</ListGroupItem>
+                <ListGroupItem value={category.pavadinimas} action onClick={handleClick} key={i}>{category.pavadinimas}</ListGroupItem>
             )
           })
         }
         </ListGroup>
+        : null }
     </>
   );
 }

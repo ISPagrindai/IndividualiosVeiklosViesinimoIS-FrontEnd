@@ -9,6 +9,7 @@ export function Login(login){
                 cookie.set('TOKEN', response.token);
                 setAuthorizationToken(response.token);
                 NotificationService.success("Sėkmingai prisijungėte")
+                console.log(cookie);
                 return true;
             }
             NotificationService.error(errorToString(response));
