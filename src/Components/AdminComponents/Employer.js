@@ -4,12 +4,16 @@ export default function Employer(props) {
   return (
     <tr>
       <td>
-        <a href={`employer/${props.data.id}`}>{props.data.name}</a>
-      </td>
-      <td>{props.data.description}</td>
-      <td>{props.data.city}</td>
-      <td>{props.data.address}</td>
-      {props.employer ? (
+        <a href={`employer/${props.data.id}`}>{props.data.pavadinimas}</a>
+      </td>    
+      <td>{props.data.imonesKodas}</td>
+      <td>{props.data.vadovas}</td>
+      <td>{props.data.tinklalapis}</td>
+      <td>{props.data.telNr}</td>
+      <td>{props.data.elPastas}</td>
+      <td>{props.data.miestas}</td>
+      <td>{props.data.adresas}</td>
+      {props.flag ? (
         <td>
           <Button variant="secondary" href={`job/edit/${props.data.id}`}>
             Redaguoti

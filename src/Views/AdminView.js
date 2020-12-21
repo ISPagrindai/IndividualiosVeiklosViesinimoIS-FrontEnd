@@ -10,7 +10,7 @@ export default function Home(){
                         <div className="align-self-center">
                             
                             <div>
-                                <Button href="individualWorkList" size="lg" variant="secondary">Peržiūrėti individualių darbų sąrašą</Button>
+                                <Button href="individualWorkAdmin" size="lg" variant="secondary">Peržiūrėti individualių darbų sąrašą</Button>
                             </div>  
                             <br></br>                         
                             <div>

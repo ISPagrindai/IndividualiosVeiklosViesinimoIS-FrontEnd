@@ -32,7 +32,7 @@ export default function AdminIndividualWrokTable(props) {
             </thead>
             <tbody>
               {temp.map(individualWork => {
-                return <AdminIndividualWrok show={handleShow} close={handleClose} flag={props.flag} data={user} key={individualWork.id} />
+                return <AdminIndividualWrok show={handleShow} close={handleClose} flag={props.flag} data={individualWork} key={individualWork.id} />
             })}
             </tbody>
           </Table>

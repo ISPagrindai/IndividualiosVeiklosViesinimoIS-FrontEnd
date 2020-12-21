@@ -37,6 +37,7 @@ import EditUser from "./Views/EditUser";
 import EmployeeOrderView from "./Views/EmployeeOrderView";
 import AutomaticOrderForm from "./Views/AutomaticOrderForm.js";
 import EmployerReviewForm from "./Views/EmployerReviewForm";
+import IndividualWorkListViewAdmin from "./Views/adminViews/IndividualWorkListViewAdmin"
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -132,6 +133,9 @@ function App() {
                 </Route>
                 <Route path="/employerAdmin">
                   <EmployersViewAdmin />
+                </Route>
+                <Route path="/individualWorkAdmin">
+                  <IndividualWorkListViewAdmin />
                 </Route>
                 <Route path="/user">
                   <UserView />
