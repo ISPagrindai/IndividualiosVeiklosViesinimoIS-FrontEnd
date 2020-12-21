@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Button, Col, Container, Table, Modal, Row } from "react-bootstrap";
 import EmployeeReview from '../Components/Employee/EmployeeReview';
 import {getProfile} from '../Services/ProfileService';
+import { getReviews } from '../Services/ReviewService';
 
 export default function IndividualWorkView(props) {
   let {id} = useParams();
@@ -15,86 +16,74 @@ export default function IndividualWorkView(props) {
     getProfile(id).then(response => setProfile(response));
   },[])
 
-  const reviews = [
-    {
-      comment: "Labai gerai dirba",
-      rating: 7.8,
-      user_id: 2,
-      user_type: "Registruota įmonė",
-      job_type: "Indų plovimas"
-    },
-    {
-      comment: "Sugadino mano dviratį",
-      rating: 3.2,
-      user_id: 7,
-      user_type: "Administratorius",
-      job_type: "Dviračio taisymas"
-    }
-  ];
+  const [reviews, setReviews] = useState();
+
+  useEffect(() =>{
+    getReviews().then(response => setReviews(response));
+  },[])
 
   return (
     <>
-    { profile ? 
-    <Container>
-      <Row>
-        <Col>
+    { profile && reviews ?
+      <Container>
+        <Row>
           <Col>
-          <div className="card my-3">
-            <h5 className="card-header">{profile.vardas} {profile.pavarde}</h5>
-            <div className="row">   
-              <div className="col-12">
-                <div className="card-title">
-                    <ul className="list-group list-group-flush">
-                      <li className="list-group-item">
-                        {/* {temp.find(w => w.id == id).email} */}
-                        <b>El-paštas: </b>
-                        {profile.elpatas}
-                        el pastas
-                      </li>
-                      <li className="list-group-item">
-                        <b>Lytis: </b>
-                        {profile.lytis}
-                      </li>
-                      <li className="list-group-item">
-                        <b>Sąskaitos nr: </b>
-                        {profile.sasNr}
-                      </li>
-                      <li className="list-group-item">
-                        <b>Gimimo metai: </b>
-                        {profile.gimimoMetai}
-                      </li>
-                      <li className="list-group-item">
-                        <b>Asmens kodas: </b>
-                        {profile.asmensKodas}
-                      </li>
-                    </ul>
+            <Col>
+            <div className="card my-3">
+              <h5 className="card-header">{profile.vardas} {profile.pavarde}</h5>
+              <div className="row">   
+                <div className="col-12">
+                  <div className="card-title">
+                      <ul className="list-group list-group-flush">
+                        <li className="list-group-item">
+                          {/* {temp.find(w => w.id == id).email} */}
+                          <b>El-paštas: </b>
+                          {profile.elpatas}
+                          el pastas
+                        </li>
+                        <li className="list-group-item">
+                          <b>Lytis: </b>
+                          {profile.lytis}
+                        </li>
+                        <li className="list-group-item">
+                          <b>Sąskaitos nr: </b>
+                          {profile.sasNr}
+                        </li>
+                        <li className="list-group-item">
+                          <b>Gimimo metai: </b>
+                          {profile.gimimoMetai}
+                        </li>
+                        <li className="list-group-item">
+                          <b>Asmens kodas: </b>
+                          {profile.asmensKodas}
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Col>
           </Col>
-        </Col>
-        <Col>
-        <Table striped bordered variant="grey" className="my-3">
-            <thead className="bg-info text-white">
-              <tr>
-                <th>Komentaras</th>
-                <th>Įvertinimas</th>
-                <th>Siuntėjo tipas</th>
-                <th>Siuntėjo ID</th>
-                <th>Atliktas darbas</th>
-              </tr>
-            </thead>
-            <tbody>
-              { reviews.map((review, i) => {
-                    return <EmployeeReview data={review} key={i}></EmployeeReview>
-                })
-              }
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
-      </Container> : null }
+          <Col>
+          <Table striped bordered variant="grey" className="my-3">
+              <thead className="bg-info text-white">
+                <tr>
+                  <th>Komentaras</th>
+                  <th>Įvertinimas</th>
+                  <th>Siuntėjo tipas</th>
+                </tr>
+              </thead>
+              <tbody>
+                { reviews.map((review, i) => {
+                      return <EmployeeReview data={review} key={i}></EmployeeReview>
+                  })
+                }
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+        </Container>
+    : null }
 
      
     </>
