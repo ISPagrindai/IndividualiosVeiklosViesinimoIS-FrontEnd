@@ -36,9 +36,6 @@ export function getJob(id){
 export function newJob(data){
   data.tipas = parseInt(data.tipas)
   data.uzmokestis = parseFloat(data.uzmokestis)
-
-  console.log(data)
-
   return post('/Imones', data)
   .then((response) => {
     NotificationService.success("Darbo pasūlymas sukurtas")
