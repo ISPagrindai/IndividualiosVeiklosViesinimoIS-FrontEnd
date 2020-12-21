@@ -1,6 +1,10 @@
 import Button from "react-bootstrap/Button";
 
 export default function AdminIndividualWrok(props) {
+   const deleteHandler = () =>{
+        props.show(true);
+        props.setId(props.data.id);
+    }
   return (
     <tr>
       <td>
@@ -16,7 +20,7 @@ export default function AdminIndividualWrok(props) {
           <Button variant="secondary" href="individualWorkEdit">
             Redaguoti
           </Button>
-          <Button variant="danger" onClick={props.show}>
+          <Button variant="danger" onClick={deleteHandler}>
             Trinti
           </Button>
         </td>

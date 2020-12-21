@@ -1,6 +1,10 @@
 import Button from "react-bootstrap/Button";
 
 export default function Employer(props) {
+    const deleteHandler = () =>{
+        props.show(true);
+        props.setId(props.data.id);
+    }
   return (
     <tr>
       <td>
@@ -18,7 +22,7 @@ export default function Employer(props) {
           <Button variant="secondary" href={`job/edit/${props.data.id}`}>
             Redaguoti
           </Button>
-          <Button variant="danger" onClick={props.show}>
+          <Button variant="danger" onClick={deleteHandler}>
             Trinti
           </Button>
           <Button variant="danger" onClick={props.show}>

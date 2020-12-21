@@ -1,55 +1,64 @@
-import { Table, Modal, Button } from "react-bootstrap";
-import {useState} from 'react'
+import { Table, Modal, Button, Container, Col, Row } from "react-bootstrap";
+import {useState, useEffect} from 'react'
 import NewEmployer from "./NewEmployer";
+import {getNewEmpolyers, confirmEmployer} from '../../Services/NewEmployerService'
 
-export default function EmployerTable(props) {
+export default function NewEmployerTable(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const temp = [
-    {
-      id: 1,
-      name: "Imone1",
-      description: "Labai lengvai suderinamas su stujimois darbas",      
-      city: "Kaunas",
-      address: "Vilniaus g. 1",
-    },
-    {
-      id: 2,
-      name: "Imone2",
-      description: "Labai lengvai suderinamas su stujimois darbas",      
-      city: "Kaunas",
-      address: "Geležinio vilko g. 1",
-    }
-   
-  ];
+  const [temp, setTemp] = useState();
+  const [id, setId] = useState();
+
+   useEffect(() =>{
+    getNewEmpolyers().then(response => setTemp(response));
+   })
+   const unfreezeHandler = () => {
+     confirmEmployer({ arUzsaldytas: false, idImone: id }).then(() => {
+       setShow(false);
+       setTemp(temp.filter(i => i.id !== id));  
+     } )
+  }
+  
+
 
   return (
     <>
-      <Table striped bordered variant="light">
-        <thead>
-          <tr>
-            <th>Pavadinimas</th>
-            <th>Aprašymas</th>           
-            <th>Miestas</th>
-            <th>Adresas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {temp.map((employer) => {
-            return <NewEmployer employer={props.flag} show={handleShow} close={handleClose} data={employer} />;
-          })}
-        </tbody>
-      </Table>
+    <Container>
+    {temp ?  (<Row>
+        <Col>
+          <Table striped bordered variant="light">
+            <thead>
+              <tr>
+                <th>Pavadinimas</th>
+                <th>Įmonės kodas</th>
+                <th>Vadovas</th>                   
+                <th>Tinklalapis</th>
+                <th>Telefono numeris</th>
+                <th>El paštas</th>
+                <th>Miestas</th>
+                <th>Adresas</th>                               
+              </tr>
+            </thead>
+            <tbody>
+              {temp.map(employer => {
+                return <NewEmployer show={handleShow} setId={setId} close={handleClose} flag={props.flag} data={employer} key={employer.id} />
+            })}
+            </tbody>
+          </Table>
+        </Col>        
+      </Row>) : null}
+
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Ar tikrai norite testi?</Modal.Title>
         </Modal.Header>
         <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Patvirtinti</Button>
+          <Button variant="danger" onClick={unfreezeHandler}>Patvirtinti</Button>
         </Modal.Footer>
       </Modal>
+      </Container>
     </>
   );
 }
