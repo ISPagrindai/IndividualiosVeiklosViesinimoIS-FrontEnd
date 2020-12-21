@@ -17,7 +17,7 @@ export function Login(login){
         .catch(error => NotificationService.error(errorToString(error)));
 }
 export function RegisterUserService(data){
-    return post('/Users/registerCompany', data)
+    return post('/Users/register', data)
         .then(() => {
             NotificationService.success("Sėkmingai užsiregistravote, dabar prisijunkite")
         })
@@ -25,8 +25,17 @@ export function RegisterUserService(data){
             NotificationService.error(errorToString(error));
         });
 }
+export function RegisterAdminService(data){
+    return post('/Users/registerAdmin', data)
+        .then(() => {
+            NotificationService.success("Sėkmingai sukurtas administratorius")
+        })
+        .catch(error => {
+            NotificationService.error(errorToString(error));
+        });
+}
 export function RegisterCompanyService(data){
-    return post('/Users/register', data)
+    return post('/Users/registerCompany', data)
         .then(() => {
             NotificationService.success("Sėkmingai užsiregistravote, dabar prisijunkite")
         })

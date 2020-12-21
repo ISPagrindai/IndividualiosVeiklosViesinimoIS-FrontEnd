@@ -1,15 +1,18 @@
-import { Button, Modal, Form } from 'react-bootstrap'
+import { Button, Modal } from 'react-bootstrap'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm } from "react-hook-form";
+import { RegisterAdminService } from '../../Services/LoginService'
 
 export default function RegisterAdmin(props){
     const [show, setShow] = useState(false);
-    const { register, handleSubmit} = useForm();
 
-    const onSubmit = (data) => {
-        props.func(false)
-        //TODO: call login service
-    }
+    const { handleSubmit, register, errors } = useForm();
+
+    const onSubmit = (values) => {
+      RegisterAdminService(values).then(() =>{
+        setShow(false);
+      })
+    };
 
     return (
         <>
@@ -23,28 +26,174 @@ export default function RegisterAdmin(props){
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
-            Nauja administratoriaus paskyra
+            Administratoriaus duomenys
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Form onSubmit={handleSubmit(onSubmit)} id="LoginForm">            
-            <Form.Group>
-                <Form.Label>El. Paštas</Form.Label>
-                <Form.Control type="email" name="email" ref={register} placeholder="el.paštas"/>
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Slaptažodis</Form.Label>
-                <Form.Control type="password" name="password" ref={register} placeholder="slaptažodis"/>
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Pakartokite slaptažodį</Form.Label>
-                <Form.Control type="password" name="password2" ref={register} placeholder="slaptažodis"/>
-            </Form.Group>
-        </Form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="form-group">
+            <label htmlFor="firstname">Vardas:</label>
+            <input
+              id="firstname"
+              name="vardas"
+              className="form-control"
+              ref={register({
+                required: "*Privalomas laukas",
+                minLength: {
+                  value: 3,
+                  message: "*Turi būti bent 3 simboliai"
+                }
+              })}
+            />
+            {errors.vardas && <span style={{"color": "red"}}>{errors.vardas.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="lastname">Pavardė:</label>
+            <input
+              id="lastname"
+              name="pavarde"
+              className="form-control"
+              ref={register({
+                required: "*Privalomas laukas",
+                minLength: {
+                  value: 3,
+                  message: "*Turi būti bent 3 simboliai"
+                }
+              })}
+            />
+            {errors.pavarde && <span style={{"color": "red"}}>{errors.pavarde.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="name">El-paštas:</label>
+            <input
+              id="email"
+              name="epastas"
+              className="form-control"
+              ref={register({
+                required: "*Privalomas laukas",
+                pattern:  /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+              })}
+            />
+            {errors.epastas && <span style={{"color": "red"}}>{errors.epastas.message}</span>}
+            {errors.epastas && errors.epastas.type === "pattern" && <span style={{"color": "red"}}>*Neatitinka email formato</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="slaptazodis">Slaptažodis:</label>
+            <input
+              id="slaptazodis"
+              name="slaptazodis"
+              className="form-control"
+              type="password"
+              ref={register({
+                required: "*Privalomas laukas",
+                minLength: {
+                  value: 8,
+                  message: "*Turi būti bent 8 simboliai"
+                }
+              })}
+            />
+            {errors.slaptazodis && <span style={{"color": "red"}}>{errors.slaptazodis.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="name">Aprašymas:</label>
+            <textarea
+              id="aprasymas"
+              name="aprasymas"
+              className="form-control"
+              ref={register({
+                required: "*Privalomas laukas",
+                minLength: {
+                  value: 10,
+                  message: "*Turi būti bent 10 simbolių"
+                },
+                maxLength: 255,
+                message: "*Turi būti ne daugiau 255 simbolių"
+              })}
+            />
+            {errors.aprasymas && <span style={{"color": "red"}}>{errors.aprasymas.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="id">Asmens kodas:</label>
+            <input
+              id="id"
+              name="asmenskodas"
+              className="form-control"
+              ref={register({
+                required: "*Privalomas laukas",
+                pattern: /^[0-9]*$/,
+                minLength: {
+                  value: 11,
+                  message: "*Turi sudaryti būti 11 simbolių"
+                },
+                maxLength: {
+                  value: 11,
+                  message: "*Turi sudaryti būti 11 simbolių"
+                }
+              })}
+            />
+            {errors.asmenskodas && <span style={{"color": "red"}}>{errors.asmenskodas.message}</span>}
+            {errors.asmenskodas && errors.asmenskodas.type === "pattern" && <span style={{"color": "red"}}>*Turi būti skaičius</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="name">Gimimo data:</label>
+            <input
+              id="birthday"
+              name="gimimometai"
+              type="date"
+              className="form-control"
+              ref={register({
+                required: "*Privalomas laukas",
+              })}
+            />
+            {errors.gimimometai && <span style={{"color": "red"}}>{errors.gimimometai.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="gender">Lytis</label>
+            <select className="form-control" id="gender" name="lytis" ref={register({required: "*Privalomas laukas"})}>
+              <option value="">Pasirinkite lytį</option>
+              <option value="vyr">Vyras</option>
+              <option value="mot">Moteris</option>              
+            </select>
+            {errors.gender && <span style={{"color": "red"}}>{errors.gender.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="iban">Saskaitos numeris:</label>
+            <input
+              id="iban"
+              name="sasnr"
+              className="form-control"
+              ref={register({
+                required: "*Privalomas laukas",
+                pattern: /^([A-Z]{2}[-]?[0-9]{2})(?=(?:[-]?[A-Z0-9]){9,30}$)((?:[-]?[A-Z0-9]{3,5}){2,7})([-]?[A-Z0-9]{1,3})?$/,
+                minLength: {
+                  value: 22,
+                  message: "*Turi sudaryti būti 22 simbolių"
+                },
+                maxLength: {
+                  value: 34,
+                  message: "*Turi sudaryti būti 34 simbolių"
+                }
+              })}
+            />
+            {errors.sasnr && <span style={{"color": "red"}}>{errors.sasnr.message}</span>}
+            {errors.sasnr && errors.sasnr.type === "pattern" && <span style={{"color": "red"}}>*Turi būti validus IBAN numeris</span>}
+          </div>
+          
+
+          <Button type="submit" variant="secondary">
+            Kurti
+          </Button>
+        </form>
         </Modal.Body>
-        <Modal.Footer>
-            <Button type="submit" form="LoginForm" variant="secondary">Patvirtinti</Button>
-        </Modal.Footer>
+        
       </Modal>
         </>
     );

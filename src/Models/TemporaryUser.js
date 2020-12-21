@@ -1,14 +1,14 @@
 export default class TemporaryUser{
     constructor(entity){
-        if(entity.IdVartotojas){
-            this.id = entity.IdVartotojas;
+        if(entity.idVartotojas){
+            this.id = entity.idVartotojas;
         }
-        this.vardas = entity.Vardas;
-        this.pavarde = entity.Pavarde;
-        this.gimimoData = entity.GimimoMetai;
-        this.lytis = entity.Lytis;
-        this.aprasymas = entity.Aprasymas;
-        this.asmensKodas = entity.AsmensKodas;
-        this.saskaitosNr = entity.SasNr;              
+        this.vardas = entity.vardas;
+        this.pavarde = entity.pavarde;
+        this.gimimoData = entity.gimimoMetai;
+        this.lytis = entity.lytis;
+        this.aprasymas = entity.aprasymas;
+        this.asmensKodas = entity.asmensKodas;
+        this.saskaitosNr = entity.sasNr;              
     }
 }
