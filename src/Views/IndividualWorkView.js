@@ -21,20 +21,20 @@ export default function IndividualWorkView(props) {
       rating: 7.8,
       user_id: 2,
       user_type: "Registruota įmonė",
-      job_type: "žydų ieškojimas"
+      job_type: "Indų plovimas"
     },
     {
-      comment: "Supiso mano audi",
+      comment: "Sugadino mano dviratį",
       rating: 3.2,
       user_id: 7,
       user_type: "Administratorius",
-      job_type: "Nacių naikinimas"
+      job_type: "Dviračio taisymas"
     }
   ];
 
   return (
     <>
-    { profile ?
+    { profile ? 
     <Container>
       <Row>
         <Col>

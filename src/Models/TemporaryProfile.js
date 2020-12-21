@@ -10,6 +10,7 @@ export default class TemporaryProfile{
         this.aprasymas = entity.aprasymas;
         this.asmensKodas = entity.asmensKodas;
         this.saskaitosNr = entity.sasNr;
-        this.sasNr = entity.sasNr;           
+        this.sasNr = entity.sasNr;    
+        this.atsiliepimai = entity.atsiliepimas;       
     }
 }

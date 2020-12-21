@@ -8,15 +8,11 @@ export default function IndividualWorkListSort(props) {
         props.sendNumberToParent(event.target.value);
     }
 
-    const handleClickAll = () => {
-        props.sendNumberToParent(null);
-    }
 
     return (
     <>
         <ListGroup>
         <ListGroupItem disabled action style={{backgroundColor: "#5d4037", color: "white"}}>Rikiavimas</ListGroupItem>
-        <ListGroupItem action onClick={handleClickAll}>Pradinis</ListGroupItem>
         {
           numberSort.map((number, i) => {
             return (
