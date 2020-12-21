@@ -3,24 +3,43 @@ import { Button } from "react-bootstrap";
 import CurrencyInput from 'react-currency-input-field';
 import {useState, useEffect} from 'react'
 import {getJobTypes} from '../Services/HelperService';
-import {newJob} from '../Services/JobService'
-import { useHistory } from 'react-router-dom';
+import {newJob, getJob, updateJob} from '../Services/JobService'
+import { useHistory, useParams } from 'react-router-dom';
 
 export default function JobForm() {
   const { handleSubmit, register, errors, control } = useForm();
+  const { id } = useParams();
+  const [data, setData] = useState();
   const [types, setTypes] = useState();
+  const [uzmokestis, setUzmokestis] = useState();
   const history = useHistory();
+  const miestai = ["Vilnius", "Kaunas", "Klaipėda", "Šiauliai", "Panevežys", "Alytus", "Marijampolė"];
   const onSubmit = (values) => {
-    newJob(values).then(() => {
-      history.push("/employers");
-    })
+    values.uzmokestis = uzmokestis;
+    if (values.id) {
+      updateJob(values).then(() => {
+        history.push("/employers");
+      });
+    } 
+    else {
+      newJob(values).then(() => {
+        history.push("/employers");
+      });
+    }
   };
-
   useEffect(() =>{
     getJobTypes().then(response => {
       setTypes(response)
     })
   }, [])
+  useEffect(() =>{
+    if(id){
+      getJob(id).then((response) =>{
+        setData(response);
+        setUzmokestis(response.uzmokestis)
+      })
+    }
+  }, [id])
 
   return (
     <div
@@ -35,12 +54,14 @@ export default function JobForm() {
      }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
+          {id ? (<input type="hidden" value={id} name="id" ref={register}/>) : null}
           <div className="form-group">
             <label htmlFor="name">Pavadinimas:</label>
             <input
               id="name"
               name="pavadinimas"
               className="form-control"
+              defaultValue={data ? data.pavadinimas : null}
               ref={register({
                 required: "*Privalomas laukas",
                 minLength: {
@@ -57,6 +78,7 @@ export default function JobForm() {
             <textarea
               id="aprasymas"
               name="aprasymas"
+              defaultValue={data ? data.aprasymas : null}
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
@@ -75,14 +97,14 @@ export default function JobForm() {
                   allowNegativeValue={false}
                   decimalsLimit={2}
                   prefix="€"
-                  onChange={(e) => onChange(e)}
-                  
+                  onChange={(e) => onChange(()=> setUzmokestis(e))}
+                  value={uzmokestis}
                 />)}
                 id="wage"
                 name="uzmokestis"
                 rules={{ required: '*Privalomas laukas', min: {value: 0.01, message: '*Privalomas laukas'} }}
                 control={control}
-                defaultValue={"-1"}
+                defaultValue={data?.uzmokestis || ""}
               />
               {errors.uzmokestis && <span style={{"color": "red"}}>{errors.uzmokestis.message}</span>}
           </div>
@@ -91,13 +113,12 @@ export default function JobForm() {
             <label htmlFor="miestas">Miestas</label>
             <select className="form-control" id="miestas" name="miestas" ref={register({required: "*Privalomas laukas"})}>
               <option value="">Pasirinkite miestą</option>
-              <option value="Vilnius">Vilnius</option>
-              <option value="Kaunas">Kaunas</option>
-              <option value="Klaipėda">Klaipėda</option>
-              <option value="Šiauliai">Šiauliai</option>
-              <option value="Panevežys">Panevežys</option>
-              <option value="Alytus">Alytus</option>
-              <option value="Marijampolė">Marijampolė</option>
+              {miestai.map(miestas => {
+                if(data && data.miestas === miestas)
+                  return (<option value={miestas} selected>{miestas}</option>)
+
+                  return (<option value={miestas}>{miestas}</option>)
+                })}
             </select>
             {errors.miestas && <span style={{"color": "red"}}>{errors.miestas.message}</span>}
           </div>
@@ -107,6 +128,7 @@ export default function JobForm() {
             <input
               id="address"
               name="adresas"
+              defaultValue={data ? data.adresas : null}
               className="form-control"
               ref={register({
                 required: "*Privalomas laukas",
@@ -121,11 +143,16 @@ export default function JobForm() {
 
           <div className="form-group">
           <label htmlFor="tipas">Veiklos tipas</label>
-            <select className="form-control" id="tipas" name="veiklostipas" ref={register({required: "*Privalomas laukas"})}>
+            <select className="form-control" id="tipas" name="tipas" ref={register({required: "*Privalomas laukas"})}>
               <option value="">Pasirinkite tipą</option>
-              {types ? types.map(type => (<option value={type.id}>{type.pavadinimas}</option>)) : null}
+              {types ? types.map(type => {
+                if(data && data.tipas === type.id)
+                  return (<option value={type.id} selected>{type.pavadinimas}</option>)
+
+                return (<option value={type.id}>{type.pavadinimas}</option>)
+              }) : null}
             </select>
-            {errors.veiklostipas && <span style={{"color": "red"}}>{errors.veiklostipas.message}</span>} 
+            {errors.tipas && <span style={{"color": "red"}}>{errors.tipas.message}</span>} 
           </div>          
 
           <Button type="submit" variant="secondary">

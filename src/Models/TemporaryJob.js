@@ -9,6 +9,6 @@ export default class TemporaryJob{
         this.uzmokestis = entity.uzmokestis;
         this.miestas = entity.miestas;
         this.adresas = entity.adresas
-        this.veiklosTipas = entity.fkVeiklosTipasidVeiklosTipas;
+        this.tipas = entity.fkVeiklosTipasidVeiklosTipas;
     }
 }
