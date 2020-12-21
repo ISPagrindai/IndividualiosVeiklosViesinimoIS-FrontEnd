@@ -28,6 +28,7 @@ export default function JobTable(props) {
     deleteJob(id).then(() =>{
       setTemp(temp.filter(job => job.id !== id))
       setShow(false)
+      setId();
     })
   }
 
@@ -49,7 +50,7 @@ export default function JobTable(props) {
             <tbody>
               { city ?
                 temp.filter(j => j.miestas === city).map((job) => {
-                  return <Job employer={props.flag} show={handleShow} close={handleClose} data={job} key={job.id} />;
+                  return <Job employer={props.flag} show={handleShow} setId={setId} close={handleClose} data={job} key={job.id} />;
                 })
                 :
                 temp.map((job) => {

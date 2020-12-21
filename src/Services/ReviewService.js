@@ -5,7 +5,7 @@ import TemporaryReview from '../Models/TemporaryReview';
 
 export function createReviewOnWorker(data){
     data.ivertinimas = parseFloat(data.ivertinimas)
-    data.individualiVeiklaId = parseInt(data.individualiVeiklaId)
+    data.vartotojasId = parseInt(data.vartotojasId)
 
     console.log(data)
   

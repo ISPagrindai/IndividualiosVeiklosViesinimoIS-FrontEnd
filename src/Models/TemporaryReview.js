@@ -8,7 +8,7 @@ export default class TemporaryReview{
         this.siuntejo_tipas = entity.siuntejoTipas
         this.siuntejo_id = entity.siuntejo_id;
 
-        this.vartotojasId = entity.fk_Vartotojasid_Vartotojas;
+        this.vartotojasId = entity.fkVartotojasidVartotojas;
         this.imoneId = entity.fk_Imoneid_Imone;
         this.veiklaId = entity.fk_Individuali_veiklaid_Individuali_veikla;
     }

@@ -13,13 +13,17 @@ export default function IndividualWork(props){
   const handleShow = () => setShow(true);
 
   useEffect(() =>{
-    getProfile(props.data.id).then(response => setProfile(response));
+    getProfile(props.data.vartotojoId).then(response => setProfile(response));
   },[])
 
   
   useEffect(() =>{
     getWorkTypes().then(response => setWorkTypes(response));
   },[])
+
+  const userId = () => {
+    
+  }
 
   const [profile, setProfile] = useState();
   const [workTypes, setWorkTypes] = useState();
@@ -72,7 +76,7 @@ export default function IndividualWork(props){
                 </Button>{" "}
 
                 <Button href={`/employeeReview/${profile.id}/work/${props.data.vartotojoId}`} variant="success">
-                Palikti atsiliepimą apie veiklą
+                Palikti atsiliepimą apie vartotoją
               </Button>{" "}
                 
                 <Button href="employeeOrder" className="my-1" variant="dark">
