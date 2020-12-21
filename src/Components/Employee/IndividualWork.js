@@ -72,7 +72,7 @@ export default function IndividualWork(props){
                 </Button>{" "}
 
                 <Button href={`/employeeReview/${profile.id}/work/${props.data.vartotojoId}`} variant="success">
-                Palikti atsiliepimą apie veiklą
+                Palikti atsiliepimą apie vartotoją
               </Button>{" "}
                 
                 <Button href="employeeOrder" className="my-1" variant="dark">

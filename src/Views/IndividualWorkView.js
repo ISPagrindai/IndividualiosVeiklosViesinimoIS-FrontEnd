@@ -23,8 +23,8 @@ export default function IndividualWorkView(props) {
   },[])
 
   return (
-    <>
-    { profile && reviews ?
+    <> {console.log(reviews)}
+    { profile && reviews ? 
       <Container>
         <Row>
           <Col>
@@ -79,7 +79,7 @@ export default function IndividualWorkView(props) {
                 </tr>
               </thead>
               <tbody>
-                { reviews.map((review, i) => {
+                { reviews.filter(r => r.vartotojasId == id).map((review, i) => {
                       return <EmployeeReview data={review} key={i}></EmployeeReview>
                   })
                 }
