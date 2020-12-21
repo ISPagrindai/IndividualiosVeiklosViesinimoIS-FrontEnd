@@ -26,7 +26,7 @@ export default function AdminIndividualWrokTable(props) {
                 <th>Kaina</th>
                 <th>Grafikas</th>
                 <th>Miestas</th>
-                <th>Veiklos tipas</th>                     
+                {/* <th>Veiklos tipas</th>                      */}
                          
               </tr>
             </thead>

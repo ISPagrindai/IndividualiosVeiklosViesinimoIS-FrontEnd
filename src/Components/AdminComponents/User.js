@@ -4,7 +4,7 @@ export default function User(props) {
   return (
     <tr>
       <td>
-        <a href={`user/${props.data.id}`}>{props.data.vardas}</a>
+        <a href={`individualWork/${props.data.id}`}>{props.data.vardas}</a>
       </td>
       <td>{props.data.pavarde}</td>
       <td>{props.data.gimimoData}</td>
