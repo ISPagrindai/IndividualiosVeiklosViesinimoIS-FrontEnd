@@ -1,4 +1,4 @@
-import {errorToString, get, post, put} from './restApiService'
+import {errorToString, get, post, put, remove} from './restApiService'
 import TemporaryJob from '../Models/TemporaryJob'
 import NotificationService from './NotificationService';
 
@@ -12,6 +12,17 @@ export function getJobs(){
     .catch((error) => {
       NotificationService.error(errorToString(error));
     });
+}
+export function getCurrentUserJobs(){
+  return get('/Imones/current')
+  .then((response) => {
+    return response.map((job) => {
+      return new TemporaryJob(job);
+    });
+  })
+  .catch((error) => {
+    NotificationService.error(errorToString(error));
+  });
 }
 export function getJob(id){
   return get('/Imones/darbas/', id)
@@ -40,6 +51,16 @@ export function updateJob(data){
   return put('/Imones', data)
   .then((response) => {
     NotificationService.success("Darbo pasūlymas paredaguotas")
+  })
+  .catch((error) => {
+    NotificationService.error(errorToString(error));
+  });
+}
+export function deleteJob(id){
+  id = parseInt(id);
+  return remove(`/Imones/${id}`)
+  .then((response) => {
+    NotificationService.success("Darbo pasūlymas ištrintas")
   })
   .catch((error) => {
     NotificationService.error(errorToString(error));

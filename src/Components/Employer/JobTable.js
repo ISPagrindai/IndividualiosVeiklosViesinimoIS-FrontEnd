@@ -2,7 +2,7 @@ import { Table, Modal, Button, Container, Col, Row } from "react-bootstrap";
 import {useState, useEffect} from 'react'
 import Job from "./Job";
 import CityFilter from "./CityFilter";
-import {getJobs} from '../../Services/JobService'
+import {getCurrentUserJobs, getJobs, deleteJob} from '../../Services/JobService'
 
 export default function JobTable(props) {
   const [show, setShow] = useState(false);
@@ -10,19 +10,31 @@ export default function JobTable(props) {
   const handleShow = () => setShow(true);
   const [city, setCity] = useState(null);
   const [temp, setTemp] = useState();
+  const [id, setId] = useState();
 
   useEffect(() =>{
-    getJobs().then(response => setTemp(response));
-  },[])
+    if(props.flag){
+      getCurrentUserJobs().then(response => setTemp(response));
+    }
+    else{
+      getJobs().then(response => setTemp(response));
+    }
+  },[props.flag])
 
   const sendCityToParent = (index) => {
     setCity(index);
+  }
+  const deleteHandler = () =>{
+    deleteJob(id).then(() =>{
+      setTemp(temp.filter(job => job.id !== id))
+      setShow(false)
+    })
   }
 
   return (
     <>
     <Container>
-    {temp ?  (<Row>
+    {temp && temp.length !== 0 ? (<Row>
         <Col>
           <Table striped bordered variant="light">
             <thead>
@@ -41,7 +53,7 @@ export default function JobTable(props) {
                 })
                 :
                 temp.map((job) => {
-                  return <Job employer={props.flag} show={handleShow} close={handleClose} data={job} key={job.id}/>;
+                  return <Job employer={props.flag} show={handleShow} setId={setId} close={handleClose} data={job} key={job.id}/>;
                 })
               }
             </tbody>
@@ -50,7 +62,7 @@ export default function JobTable(props) {
         <Col sm={2}>
           <CityFilter sendCityToParent={sendCityToParent} data={temp}></CityFilter>
         </Col>
-      </Row>) : null}
+      </Row>) : (<h2>Trumpalaikių darbų nėra</h2>)}
 
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
@@ -58,7 +70,7 @@ export default function JobTable(props) {
         </Modal.Header>
         <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
+          <Button variant="danger" onClick={deleteHandler}>Trinti</Button>
         </Modal.Footer>
       </Modal>
       </Container>
