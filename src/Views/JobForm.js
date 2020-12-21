@@ -7,7 +7,7 @@ import {newJob, getJob, updateJob} from '../Services/JobService'
 import { useHistory, useParams } from 'react-router-dom';
 
 export default function JobForm() {
-  const { handleSubmit, register, errors, control } = useForm();
+  const { handleSubmit, register, errors, control, setValue } = useForm();
   const { id } = useParams();
   const [data, setData] = useState();
   const [types, setTypes] = useState();
@@ -28,16 +28,19 @@ export default function JobForm() {
       });
     }
   };
+  
   useEffect(() =>{
     getJobTypes().then(response => {
       setTypes(response)
     })
   }, [])
+
   useEffect(() =>{
     if(id){
       getJob(id).then((response) =>{
         setData(response);
         setUzmokestis(response.uzmokestis)
+        setValue("uzmokestis", response.uzmokestis)
       })
     }
   }, [id])
@@ -98,8 +101,9 @@ export default function JobForm() {
                   allowNegativeValue={false}
                   decimalsLimit={2}
                   prefix="€"
-                  onChange={(e) => onChange(()=> setUzmokestis(e))}
+                  onChange={(e) => {onChange(e); setUzmokestis(e)} }
                   value={uzmokestis}
+                  onBlur={onBlur}
                 />)}
                 id="wage"
                 name="uzmokestis"

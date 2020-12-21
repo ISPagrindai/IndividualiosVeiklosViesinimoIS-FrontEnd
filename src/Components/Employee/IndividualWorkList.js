@@ -12,22 +12,11 @@ export default function IndividualWorkList(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [temp, setTemp] = useState();
-  const [profiles, setProfiles] = useState();
   const [workTypes, setWorkTypes] = useState();
   const [id, setId] = useState();
   const [currentId, setCurrentId] = useState();
-
-  const deleteHandler = () =>{
-    deleteWork(id).then(() => {
-      console.log(temp);
-      //temp = temp.filter(w => w.id != id);
-      handleClose();
-    })
-  }
-
-  useEffect(() =>{
-    getCurrentUser().then(response => setCurrentId(response));
-  })
+  const [category, setCategory] = useState(null);
+  const [number, setNumber] = useState(null);
 
   useEffect(() =>{
     getWorkTypes().then(response => setWorkTypes(response));
@@ -35,14 +24,17 @@ export default function IndividualWorkList(props) {
 
   useEffect(() =>{
     getWorkers().then(response => setTemp(response));
-  },[])
-
+  }, [])
+  
+  const deleteHandler = () =>{
+    deleteWork(id).then(() => {
+      setTemp(temp.filter(w => w.id !== id));
+      handleClose();
+    })
+  }
   useEffect(() =>{
-    getProfile(1).then(response => setProfiles(response));
-  },[])
-
-  const [category, setCategory] = useState(null);
-  const [number, setNumber] = useState(null);
+    getCurrentUser().then(response => setCurrentId(response))
+  }, [])
 
   const sendCategoryToParent = (index) => {
     setCategory(index);
@@ -54,85 +46,91 @@ export default function IndividualWorkList(props) {
 
   return (
     <>
-    {temp && workTypes ? <Row>     {console.log(temp.map(w => w = w.atsiliepimai))}
+    {temp && workTypes ?
+      <Row> 
+      <div className="col-sm-3 col-md-3 col-lg-2 my-5 mx-5">
+          <CategoryFilter sendCategoryToParent={sendCategoryToParent} data={temp}></CategoryFilter>
+          < br/>
+          { category ?
+            null
+            : <IndividualWorkListSort sendNumberToParent={sendNumberToParent} data={temp}></IndividualWorkListSort> }
+      </div>
 
-    <div className="col-sm-3 col-md-3 col-lg-2 my-5 mx-5">
-        <CategoryFilter sendCategoryToParent={sendCategoryToParent} data={temp}></CategoryFilter>
-        < br/>
-        { category ?
-          null
-          : <IndividualWorkListSort sendNumberToParent={sendNumberToParent} data={temp}></IndividualWorkListSort> }
-    </div>
-
-    <div className="col">
-    <Container fluid>
-        <Row xs={1} sm={1} md={1} lg={2} xl={3}>
-        {number === "A-Z" ?
-          category ?
-            temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).length > 0 ?
-              temp.sort(function(a, b){
-                if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas < workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return -1; }
-                if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas > workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return 1; }
-                return 0;
-              }).filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).map((work) => {
-                return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler}  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
-            }) 
-            : 
-            <Alert variant="warning" className="my-5">
-              Individualių veiklų pagal šia kategoriją nėra...
-            </Alert>
-          :
-            temp.sort(function(a, b){
-              if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas < workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return -1; }
-              if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas > workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return 1; }
-              return 0;
-            }).map((work) => {
-              return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler}  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id} />;
-          })
-          : 
-          (number === "Z-A" ?
-            category ? 
-              temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).length > 0 ?
-                temp.sort(function(a, b){
-                  if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas < workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return 1; }
-                  if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas > workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return -1; }
-                  return 0;
-                }).filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).map((work) => {
-                  return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler} employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
-                })
-                :
-                <Alert variant="warning" className="my-5">
-                  Individualių veiklų pagal šia kategoriją nėra...
-                </Alert>
-              :
-              temp.sort(function(a, b){
-                if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas < workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return 1; }
-                if(workTypes.find(type => type.id == a.veiklosTipas).pavadinimas > workTypes.find(type => type.id == b.veiklosTipas).pavadinimas) { return -1; }
-                return 0;
-              }).map((work) => {
-                return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler}  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
-              })
-          :
+      <div className="col">
+      {currentId ? (<Container fluid>
+          <Row xs={1} sm={1} md={1} lg={2} xl={3}>
+          {number === "A-Z" ?
             category ?
-              temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).length > 0 ?
-              temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).map((work) => {
-                return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler}  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
-            })
-            :
+              temp.filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas = category).id).length > 0 ?
+                temp.sort(function(a, b){
+                  if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas < workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return -1; }
+                  if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas > workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return 1; }
+                  return 0;
+                }).filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).map((work) => {
+                  return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler} employee={props.flag} show={handleShow} close={handleClose} temp={temp} data={work} key={work.id}
+                    />;
+              }) 
+              : 
               <Alert variant="warning" className="my-5">
                 Individualių veiklų pagal šia kategoriją nėra...
               </Alert>
-          :
-            temp.map((work) => {
-              return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler}  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id} />;
-          })
-          ) 
-        }
-        
-        </Row>
-        </Container>
-    </div>
-    </Row> 
+            :
+              temp.sort(function(a, b){
+                if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas < workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return -1; }
+                if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas > workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return 1; }
+                return 0;
+              }).map((work) => {
+                return <IndividualWork  currentId={currentId} setId={setId} delete={deleteHandler}
+                employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id} />;
+            })
+            : 
+            (number === "Z-A" ?
+              category ? 
+                temp.filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).length > 0 ?
+                  temp.sort(function(a, b){
+                    if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas < workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return 1; }
+                    if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas > workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return -1; }
+                    return 0;
+                  }).filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).map((work) => {
+                    return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler}
+                    employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
+                  })
+                  :
+                  <Alert variant="warning" className="my-5">
+                    Individualių veiklų pagal šia kategoriją nėra...
+                  </Alert>
+                :
+                temp.sort(function(a, b){
+                  if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas < workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return 1; }
+                  if(workTypes.find(type => type.id === a.veiklosTipas).pavadinimas > workTypes.find(type => type.id === b.veiklosTipas).pavadinimas) { return -1; }
+                  return 0;
+                }).map((work) => {
+                  return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler}
+                  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
+                })
+            :
+              category ?
+                temp.filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).length > 0 ?
+                temp.filter(work => work.veiklosTipas === workTypes.find(type => type.pavadinimas === category).id).map((work) => {
+                  return <IndividualWork  currentId={currentId} setId={setId} delete={deleteHandler}
+                  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
+              })
+              :
+                <Alert variant="warning" className="my-5">
+                  Individualių veiklų pagal šia kategoriją nėra...
+                </Alert>
+            :
+              temp.map((work) => {
+                return <IndividualWork currentId={currentId} setId={setId} delete={deleteHandler}
+                employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id} />;
+            })
+            ) 
+          }
+          
+          </Row>
+          </Container>) : null}
+      </div>
+      </Row> 
     : null }
 
     

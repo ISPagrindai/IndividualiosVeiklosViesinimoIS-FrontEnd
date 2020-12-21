@@ -1,4 +1,4 @@
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Button } from "react-bootstrap";
 import Login from './Authentication/Login'
 import Register from './Authentication/Register'
 import Logout from './Authentication/Logout'
@@ -16,7 +16,10 @@ export default function Navigation(props) {
       </Nav>
       <Nav>
         {props.isLoggedIn ? (
-          <Logout setIsLoggedIn={props.setIsLoggedIn} />
+          <div>
+            <Button className="my-1 mr-3" variant="success" href={`/individualWorkForm`}>Sukurti veiklą</Button>
+            <Logout setIsLoggedIn={props.setIsLoggedIn} />
+          </div>
         ) : (
           <>
             <Register />

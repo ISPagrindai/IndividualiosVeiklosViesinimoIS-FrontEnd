@@ -1,17 +1,24 @@
 import { Table, Modal, Button, Container, Col, Row } from "react-bootstrap";
 import {useState, useEffect} from 'react'
 import Employer from "./Employer";
-import {getEmployers} from '../../Services/EmployerService'
+import {getEmployers, deleteEmployer} from '../../Services/EmployerService'
 
 export default function EmployerTable(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [temp, setTemp] = useState();
+  const [id, setId] = useState();
 
    useEffect(() =>{
     getEmployers().then(response => setTemp(response));
   })
+  const deleteHandler = () => {
+    deleteEmployer(id).then(() => {
+      setTemp(temp.filter(job => job.id !== id))
+      setShow(false)
+    })
+  }
 
   return (
     <>
@@ -33,7 +40,7 @@ export default function EmployerTable(props) {
             </thead>
             <tbody>
               {temp.map(employer => {
-                return <Employer show={handleShow} close={handleClose} flag={props.flag} data={employer} key={employer.id} />
+                return <Employer show={handleShow} setId={setId} close={handleClose} flag={props.flag} data={employer} key={employer.id} />
             })}
             </tbody>
           </Table>
@@ -46,7 +53,7 @@ export default function EmployerTable(props) {
         </Modal.Header>
         <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
+          <Button variant="danger" onClick={deleteHandler}>Trinti</Button>
         </Modal.Footer>
       </Modal>
       </Container>

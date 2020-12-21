@@ -1,24 +1,67 @@
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import CurrencyInput from 'react-currency-input-field';
+import { useHistory, useParams } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import { newWorker, getWorker, updateWorker } from '../Services/WorkerService';
+import { getJobTypes } from '../Services/HelperService';
 
 export default function UserProfile() {
-  const { handleSubmit, register, errors, control } = useForm();
+
+    const [types, setTypes] = useState();
+    const history = useHistory();
+    const {id} = useParams();
+    const [data, setData] = useState();
+    const [kaina, setKaina] = useState();
+    const miestai = ["Vilnius", "Kaunas", "Klaipėda", "Šiauliai", "Panevežys", "Alytus", "Marijampolė"];
+
+  const { handleSubmit, register, errors, control, setValue } = useForm();
+
   const onSubmit = (values) => {
-    console.log(values);
+    values.kaina = kaina;
+    if(values.id){
+        updateWorker(values).then(() => {
+            history.push("/individualWorkList");
+        });
+    }
+    else{
+        newWorker(values).then(() => {
+            history.push("/individualWorkList");
+        });
+    }
   };
 
-  return (
+  useEffect(() =>{
+    getJobTypes().then(response => {
+      setTypes(response)
+    })
+  }, [])
+
+  useEffect(() =>{
+    if(id){
+        getWorker(id).then(response => {
+            setData(response);
+            setKaina(response.kaina)
+            setValue("kaina", response.kaina)
+        })
+    }
+  },[id])
+
+
+  return ( 
+      <> { types ?
           <div className="container my-5 border py-5 px-5">
             <form onSubmit={handleSubmit(onSubmit)}>
+            {id ? (<input type="hidden" value={id} name="id" ref={register}/>) : null}
                 <div className="row">
                     <div className="col">
                         <h3>Veiklos duomenys</h3>
                         <div className="form-group">
-                            <label htmlFor="name">Pavadinimas:</label>
+                            <label htmlFor="pavadinimas">Pavadinimas:</label>
                             <input
-                            id="name"
-                            name="name"
+                            id="pavadinimas"
+                            name="pavadinimas"
+                            defaultValue={data ? data.pavadinimas : null}
                             className="form-control"
                             ref={register({
                                 required: "*Privalomas laukas",
@@ -28,7 +71,7 @@ export default function UserProfile() {
                                 },
                             })}
                             />
-                            {errors.name && <span style={{"color": "red"}}>{errors.name.message}</span>}
+                            {errors.pavadinimas && <span style={{"color": "red"}}>{errors.pavadinimas.message}</span>}
                         </div>
 
                         <div className="form-group">
@@ -36,6 +79,7 @@ export default function UserProfile() {
                             <textarea
                             id="aprasymas"
                             name="aprasymas"
+                            defaultValue={data ? data.aprasymas : null}
                             className="form-control"
                             ref={register({
                                 required: "*Privalomas laukas",
@@ -45,7 +89,7 @@ export default function UserProfile() {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="wage">Kaina (valandai):</label>
+                            <label htmlFor="kaina">Kaina (valandai):</label>
                             <Controller
                                 render={({onChange, onBlur}) => (
                                 <CurrencyInput                 
@@ -54,16 +98,18 @@ export default function UserProfile() {
                                 allowNegativeValue={false}
                                 decimalsLimit={2}
                                 prefix="€"
-                                onChange={(e) => onChange(e)}
+                                onChange={(e) => {onChange(e); setKaina(e)} }
+                                value={kaina}
+                                onBlur={onBlur}
                                 
                                 />)}
-                                id="wage"
-                                name="wage"
+                                id="kaina"
+                                name="kaina"
                                 rules={{ required: '*Privalomas laukas', min: {value: 0.01, message: '*Privalomas laukas'} }}
                                 control={control}
-                                defaultValue={"-1"}
+                                defaultValue={data?.kaina || ""}
                             />
-                            {errors.wage && <span style={{"color": "red"}}>{errors.wage.message}</span>}
+                            {errors.kaina && <span style={{"color": "red"}}>{errors.kaina.message}</span>}
                         </div>
 
                         <div className="form-group">
@@ -71,6 +117,7 @@ export default function UserProfile() {
                             <textarea
                             id="grafikas"
                             name="grafikas"
+                            defaultValue={data ? data.grafikas : null}
                             className="form-control"
                             ref={register({
                                 required: "*Privalomas laukas",
@@ -86,33 +133,32 @@ export default function UserProfile() {
                             <label htmlFor="miestas">Miestas</label>
                             <select className="form-control" id="miestas" name="miestas" ref={register({required: "*Privalomas laukas"})}>
                                 <option value="">Pasirinkite miestą</option>
-                                <option value="Vilnius">Vilnius</option>
-                                <option value="Kaunas">Kaunas</option>
-                                <option value="Klaipėda">Klaipėda</option>
-                                <option value="Šiauliai">Šiauliai</option>
-                                <option value="Panevežys">Panevežys</option>
-                                <option value="Alytus">Alytus</option>
-                                <option value="Marijampolė">Marijampolė</option>
+                                  {miestai.map(miestas => {
+                                      if (data && data.miestas === miestas)
+                                          return (<option value={miestas} selected>{miestas}</option>)
+
+                                      return (<option value={miestas}>{miestas}</option>)
+                                  })}
                             </select>
                             {errors.miestas && <span style={{"color": "red"}}>{errors.miestas.message}</span>}
                         </div>
 
+                        <div className="col">
                         <div className="form-group">
-                            <label htmlFor="name">Adresas:</label>
-                            <input
-                            id="address"
-                            name="address"
-                            className="form-control"
-                            ref={register({
-                                required: "*Privalomas laukas",
-                                minLength: {
-                                value: 5,
-                                message: "*Adresą turi sudaryti bent 5 simboliai",
-                                },
-                            })}
-                            />
-                            {errors.address && <span style={{"color": "red"}}>{errors.address.message}</span>}
+                            <label htmlFor="veiklosTipas">Veiklos tipas</label>
+                            <select className="form-control" id="veiklosTipas" name="veiklosTipas" ref={register({required: "*Privalomas laukas"})}>
+                                <option value="">Pasirinkite veiklos tipą</option>
+                                      {types ? types.map(type => {
+                                          if (data && data.veiklosTipas === type.id)
+                                              return (<option value={type.id} selected>{type.pavadinimas}</option>)
+
+                                          return (<option value={type.id}>{type.pavadinimas}</option>)
+                                      }) : null}
+                            </select>
+                            {errors.miestas && <span style={{"color": "red"}}>{errors.miestas.message}</span>}
                         </div>
+                    </div>
+                       
                     </div>
                 </div>
 
@@ -121,5 +167,7 @@ export default function UserProfile() {
                 </Button>
             </form>
         </div>
+        : null }
+        </>
   );
 }

@@ -1,40 +1,29 @@
 import { Table, Modal, Button } from "react-bootstrap";
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Candidate from './Candidate'
+import {getJobCandidates, deleteCandidate} from '../../Services/JobService'
+import { useParams} from 'react-router-dom'
 
 export default function CandidateTable(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const temp = [
-    {
-      id: 1,
-      name: "Domantas",
-      surname: "Kernagis",
-      birthday: "1999-09-17",
-      sex: "Vyras",
-      phone: "+37065375753",
-      email: "pastas@gmail.com"
-    },
-    {
-      id: 2,
-      name: "Aiste",
-      surname: "Juozapavičiūtė",
-      birthday: "1999-05-11",
-      sex: "Moteris",
-      phone: "+37065375753",
-      email: "pastas@gmail.com"
-    },
-    {
-      id: 3,
-      name: "Aivaras",
-      surname: "Kalnaitis",
-      birthday: "2000-01-01",
-      sex: "Vyras",
-      phone: "+37065375753",
-      email: "pastas@gmail.com"
-    },
-  ];
+  const [data, setData] = useState();
+  const [deleteId, setDeleteId] = useState();
+  const { id } = useParams();
+
+  useEffect(() =>{
+    getJobCandidates(id).then((response) =>{
+      setData(response)
+    })
+  }, [id])
+
+  const clickHandler = () =>{
+    deleteCandidate({jobId: parseInt(id), candidateId: parseInt(deleteId)}).then(() =>{
+      setData(data.filter(d => d.id !== deleteId))
+      setShow(false)
+    })
+  }
 
   return (
     <>
@@ -45,15 +34,14 @@ export default function CandidateTable(props) {
             <th>Pavardė</th>
             <th>Gimimo data</th>
             <th>Lytis</th>
-            <th>Tel. Nr</th>
             <th>El. Paštas</th>
           </tr>
         </thead>
-        <tbody>
-            {temp.map(candidate => {
-                return <Candidate show={handleShow} close={handleClose} flag={props.flag} data={candidate} />
+        {data ? (<tbody>
+            {data.map(candidate => {
+                return <Candidate key={candidate.id} show={handleShow} close={handleClose} setDeleteId={setDeleteId} flag={props.flag} data={candidate} />
             })}
-        </tbody>
+        </tbody>) : null}
       </Table>
       <Button variant="secondary" onClick={handleShow}>Patvirtinti kandidatūrą</Button>
       <Modal show={show} onHide={() => setShow(false)}>
@@ -62,7 +50,7 @@ export default function CandidateTable(props) {
         </Modal.Header>
         <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Patvirtinti</Button>
+          <Button variant="danger" onClick={clickHandler}>Patvirtinti</Button>
         </Modal.Footer>
       </Modal>
     </>
