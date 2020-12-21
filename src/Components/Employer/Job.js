@@ -14,6 +14,7 @@ export default function Job(props){
             <td>{props.data.adresas}</td>
             {props.employer ? 
             <td>
+                <Button variant="info" href={`job/${props.data.id}/candidates`}>Kandidatai</Button>
                 <Button variant="secondary" href={`job/edit/${props.data.id}`}>Redaguoti</Button>
                 <Button variant="danger" onClick={deleteHandler}>Trinti</Button>
             </td> : ""}
