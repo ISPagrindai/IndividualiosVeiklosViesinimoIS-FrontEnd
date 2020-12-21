@@ -1,21 +1,31 @@
-import { Container, Row, Modal, Button } from "react-bootstrap";
+import { Container, Row, Modal, Button, Alert } from "react-bootstrap";
 import {useState, useEffect} from 'react'
 import IndividualWork from "./IndividualWork";
 import CategoryFilter from "./CategoryFilter";
 import IndividualWorkListSort from "./IndividualWorkListSort";
 import {getWorkers} from '../../Services//WorkerService';
+import {getProfile} from '../../Services/ProfileService';
+import {getWorkTypes} from '../../Services/WorkerService';
 
 export default function IndividualWorkList(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [temp, setTemp] = useState();
+  const [profiles, setProfiles] = useState();
+  const [workTypes, setWorkTypes] = useState();
+
+  useEffect(() =>{
+    getWorkTypes().then(response => setWorkTypes(response));
+  },[])
 
   useEffect(() =>{
     getWorkers().then(response => setTemp(response));
   },[])
 
-
+  useEffect(() =>{
+    getProfile(1).then(response => setProfiles(response));
+  },[])
 
   const [category, setCategory] = useState(null);
   const [number, setNumber] = useState(null);
@@ -30,63 +40,30 @@ export default function IndividualWorkList(props) {
 
   return (
     <>
-    {temp ? <Row>
+    {temp && workTypes ? <Row>
     <div className="col-sm-3 col-md-3 col-lg-2 my-5 mx-5">
         <CategoryFilter sendCategoryToParent={sendCategoryToParent} data={temp}></CategoryFilter>
         < br/>
-        <IndividualWorkListSort sendNumberToParent={sendNumberToParent} data={temp}></IndividualWorkListSort>
     </div>
 
     <div className="col">
     <Container fluid>
         <Row xs={1} sm={1} md={1} lg={2} xl={3}>
-        {number === "A-Z" ?
-          category ?
-            temp.sort(function(a, b){
-              if(a.veiklosTipas < b.veiklosTipas) { return -1; }
-              if(a.veiklosTipas > b.veiklosTipas) { return 1; }
-              return 0;
-            }).filter(w => w.veiklosTipas === category).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
-          })
-          :
-            temp.sort(function(a, b){
-              if(a.veiklosTipas < b.veiklosTipas) { return -1; }
-              if(a.veiklosTipas > b.veiklosTipas) { return 1; }
-              return 0;
-            }).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id} />;
-          })
-          : 
-          (number === "Z-A" ?
-            category ?
-            temp.sort(function(a, b){
-              if(a.veiklosTipas < b.veiklosTipas) { return 1; }
-              if(a.veiklosTipas > b.veiklosTipas) { return -1; }
-              return 0;
-            }).filter(w => w.veiklosTipas === category).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
-            })
-            :
-            temp.sort(function(a, b){
-              if(a.veiklosTipas < b.veiklosTipas) { return 1; }
-              if(a.veiklosTipas > b.veiklosTipas) { return -1; }
-              return 0;
-            }).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
-            })
-          :
-            category ?
-            temp.filter(w => w.veiklosTipas === category).map((work) => {
-              return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
-          })
+        
+            { category ?
+              temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).length > 0 ?
+                temp.filter(work => work.veiklosTipas == workTypes.find(type => type.pavadinimas == category).id).map((work) => {
+                  return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id}/>;
+              })
+              :
+                  <Alert variant="warning" className="my-5">
+                  Individualių veiklų pagal šia kategoriją nėra...
+                </Alert>
           :
             temp.map((work) => {
               return <IndividualWork  employee={props.flag} show={handleShow} close={handleClose} data={work} key={work.id} />;
           })
-          ) 
-        }
-        
+        } 
         </Row>
         </Container>
     </div>

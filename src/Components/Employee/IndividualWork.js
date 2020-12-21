@@ -2,6 +2,8 @@ import { Col, Modal, Button } from "react-bootstrap";
 import {useState, useEffect} from 'react';
 import{ init } from 'emailjs-com';
 import {getProfile} from '../../Services/ProfileService';
+import {getWorkTypes} from '../../Services/WorkerService';
+
 init("user_eNIaeY7tuSTS9yz3Rtsvq");
 
 
@@ -14,13 +16,19 @@ export default function IndividualWork(props){
     getProfile(props.data.id).then(response => setProfile(response));
   },[])
 
+  
+  useEffect(() =>{
+    getWorkTypes().then(response => setWorkTypes(response));
+  },[])
+
   const [profile, setProfile] = useState();
+  const [workTypes, setWorkTypes] = useState();
 
     return (
-    <> {profile ?
+    <> {profile && workTypes ?
           <Col>
             <div className="card my-4">
-              <h5 className="card-header">Veikos ID: {props.data.veiklosTipas}</h5>
+              <h5 className="card-header">{workTypes.find(t => t.id === props.data.veiklosTipas).pavadinimas}</h5>
               <div className="row">      
                 <div className="col-12">
                   <div className="card-title">
