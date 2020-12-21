@@ -1,5 +1,5 @@
 import TemporaryWorker from '../Models/TemporaryWorker';
-import {errorToString, get, post} from './restApiService';
+import {errorToString, get, post, remove} from './restApiService';
 import TemporaryWorkTypes from "../Models/TemporaryWorkTypes";
 import NotificationService from './NotificationService';
 
@@ -41,5 +41,20 @@ export function newWorker(data){
   })
   .catch((error) => {
     NotificationService.error(errorToString(error));
+  });
+}
+
+export function getCurrentUser(){
+  return get('/Profile')
+      .then(response =>{
+          return response;
+      })
+}
+
+export function deleteWork(id){
+  id = parseInt(id);
+  return remove(`/IndividualiVeikla/${id}`)
+  .then((response) => {
+    NotificationService.success("Individuali veikla ištrinta")
   });
 }
