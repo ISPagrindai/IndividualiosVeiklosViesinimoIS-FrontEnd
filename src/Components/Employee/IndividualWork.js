@@ -12,6 +12,11 @@ export default function IndividualWork(props){
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
 
+  const deleteHandler = () => {
+    handleShow();
+    props.setId(props.data.id);
+  }
+
   useEffect(() =>{
     getProfile(props.data.id).then(response => setProfile(response));
   },[])
@@ -65,7 +70,7 @@ export default function IndividualWork(props){
               >
               Redaguoti
               </Button>{" "}
-              <Button onClick={props.show} variant="danger" onClick={handleShow}>Ištrinti</Button>{" "}
+              {props.currentId == props.data.id ? <Button onClick={props.show} variant="danger" onClick={deleteHandler}>Ištrinti</Button> : null}
                   
                 <Button href={`individualWork/${profile.id}`} variant="success">
                   Peržiūrėti profilį
@@ -93,7 +98,7 @@ export default function IndividualWork(props){
         </Modal.Header>
         <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
+          <Button variant="danger" onClick={() => props.delete()}>Trinti</Button>
         </Modal.Footer>
       </Modal>
             
