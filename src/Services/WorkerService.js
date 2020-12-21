@@ -1,6 +1,8 @@
 import TemporaryWorker from '../Models/TemporaryWorker';
-import {errorToString, get} from './restApiService';
+import {errorToString, get, post} from './restApiService';
 import TemporaryWorkTypes from "../Models/TemporaryWorkTypes";
+import NotificationService from './NotificationService';
+
 
 export function getWorkers(){
     return get('/IndividualiVeikla')
@@ -27,13 +29,17 @@ export function getWorkTypes(){
   });
 }
 
-// export function newReview(data){
-//   data.rating = parseFloat(data.rating)
-//   return post('/Atsiliepimas', data)
-//   .then((response) => {
-//     NotificationService.success("Darbo pasūlymas sukurtas")
-//   })
-//   .catch((error) => {
-//     NotificationService.error(errorToString(error));
-//   });
-// }
+export function newWorker(data){
+  data.veiklosTipas = parseInt(data.veiklosTipas)
+  data.kaina = parseFloat(data.kaina)
+
+  console.log(data)
+
+  return post('/IndividualiVeikla', data)
+  .then((response) => {
+    NotificationService.success("Individuali veikla sukurta")
+  })
+  .catch((error) => {
+    NotificationService.error(errorToString(error));
+  });
+}

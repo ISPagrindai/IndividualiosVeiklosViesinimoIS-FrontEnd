@@ -28,11 +28,13 @@ export default function JobForm() {
       });
     }
   };
+  
   useEffect(() =>{
     getJobTypes().then(response => {
       setTypes(response)
     })
   }, [])
+
   useEffect(() =>{
     if(id){
       getJob(id).then((response) =>{

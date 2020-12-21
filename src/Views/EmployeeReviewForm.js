@@ -17,7 +17,7 @@ export default function Review() {
     } 
 
 
-  let {workId} = useParams();
+  let {userId, workId} = useParams();
 
   
 
@@ -28,7 +28,7 @@ export default function Review() {
                     <div className="card">
                         <h4 className="card-header">Atsiliepimas apie individualią veiklą</h4> 
                         <form onSubmit={handleSubmit(onSubmit)}>
-                        {workId ? (<input type="hidden" value={workId} name="individualiVeiklaId" ref={register}/>) : null}
+                        {userId ? (<input type="hidden" value={userId} name="vartotojasId" ref={register}/>) : null}
                         
                             <div className="row justify-content-center">
                                 <div className="form-group">

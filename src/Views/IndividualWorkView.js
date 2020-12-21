@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { useState, useEffect } from "react";
-import { Button, Col, Container, Table, Modal, Row } from "react-bootstrap";
+import { Col, Button, Container, Table, Row } from "react-bootstrap";
 import EmployeeReview from '../Components/Employee/EmployeeReview';
 import {getProfile} from '../Services/ProfileService';
 import { getReviews } from '../Services/ReviewService';
@@ -23,8 +23,8 @@ export default function IndividualWorkView(props) {
   },[])
 
   return (
-    <>
-    { profile && reviews ?
+    <> {console.log(reviews)}
+    { profile && reviews ? 
       <Container>
         <Row>
           <Col>
@@ -36,7 +36,6 @@ export default function IndividualWorkView(props) {
                   <div className="card-title">
                       <ul className="list-group list-group-flush">
                         <li className="list-group-item">
-                          {/* {temp.find(w => w.id == id).email} */}
                           <b>El-paštas: </b>
                           {profile.elpatas}
                           el pastas
@@ -61,7 +60,13 @@ export default function IndividualWorkView(props) {
                     </div>
                   </div>
                 </div>
+                <div className="card-footer">
+              <Button className="my-1" variant="success" href={`/individualWorkForm/${profile.id}`}>
+                Sukurti veiklą
+              </Button>{" "}
+            </div>
               </div>
+
             </Col>
           </Col>
           <Col>
@@ -74,7 +79,7 @@ export default function IndividualWorkView(props) {
                 </tr>
               </thead>
               <tbody>
-                { reviews.map((review, i) => {
+                { reviews.filter(r => r.vartotojasId == id).map((review, i) => {
                       return <EmployeeReview data={review} key={i}></EmployeeReview>
                   })
                 }
