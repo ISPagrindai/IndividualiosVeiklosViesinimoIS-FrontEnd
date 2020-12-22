@@ -1,10 +1,11 @@
 import Button from "react-bootstrap/Button";
 
 export default function Employer(props) {
-    const deleteHandler = () =>{
-        props.show(true);
+    const handler = () =>{
+        props.show();
         props.setId(props.data.id);
-    }
+  }
+  
   return (
     <tr>
       <td>
@@ -19,15 +20,13 @@ export default function Employer(props) {
       <td>{props.data.adresas}</td>
       {props.flag ? (
         <td>
-          <Button variant="secondary" href={`job/edit/${props.data.id}`}>
+          {/* <Button variant="secondary" href={`job/edit/${props.data.id}`}>
             Redaguoti
+          </Button> */}
+          <Button variant="danger" onClick={handler}>
+            Veiksmai
           </Button>
-          <Button variant="danger" onClick={deleteHandler}>
-            Trinti
-          </Button>
-          <Button variant="danger" onClick={props.show}>
-            Užšaldyti
-          </Button>
+          
         </td>
       ) : (
         ""

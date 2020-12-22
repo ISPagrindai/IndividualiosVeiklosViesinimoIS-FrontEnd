@@ -1,20 +1,28 @@
 import { Table, Modal, Button, Container, Col, Row } from "react-bootstrap";
 import {useState, useEffect} from 'react'
 import User from './User'
-import {getUsers} from '../../Services/UserService'
+import {getUsers, deleteUser} from '../../Services/UserService'
 
 export default function UserTable(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [temp, setTemp] = useState();
+  const [id, setId] = useState();
 
   useEffect(() =>{
     getUsers().then(response => {
       setTemp(response)
     console.log(response);
     });
-  },[])
+  }, [])
+  const deleteHandler = () =>{
+    deleteUser(id).then(() =>{
+      setTemp(temp.filter(user => user.id !== id))
+      setShow(false)
+      setId();
+    })
+  }
 
   return (
     <>
@@ -35,7 +43,7 @@ export default function UserTable(props) {
             </thead>
             <tbody>
               {temp.map(user => {
-                return <User show={handleShow} close={handleClose} flag={props.flag} data={user} key={user.id} />
+                return <User setId={setId}  show={handleShow} close={handleClose} flag={props.flag} data={user} key={user.id} />
             })}
             </tbody>
           </Table>
@@ -48,7 +56,7 @@ export default function UserTable(props) {
         </Modal.Header>
         <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
+          <Button variant="danger" onClick={deleteHandler}>Trinti</Button>
         </Modal.Footer>
       </Modal>
       </Container>

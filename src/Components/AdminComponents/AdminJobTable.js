@@ -2,7 +2,8 @@ import { Table, Modal, Button, Container, Col, Row } from "react-bootstrap";
 import {useState, useEffect} from 'react'
 import AdminJob from "../AdminComponents/AdminJob";
 import CityFilter from "../Employer/CityFilter";
-import {getJobs} from '../../Services/JobService'
+import { getJobs, deleteJob } from '../../Services/JobService'
+
 
 export default function JobTable(props) {
   const [show, setShow] = useState(false);
@@ -10,6 +11,8 @@ export default function JobTable(props) {
   const handleShow = () => setShow(true);
   const [city, setCity] = useState(null);
   const [temp, setTemp] = useState();
+  const [id, setId] = useState();
+
 
   useEffect(() =>{
     getJobs().then(response => setTemp(response));
@@ -17,6 +20,13 @@ export default function JobTable(props) {
 
   const sendCityToParent = (index) => {
     setCity(index);
+  }
+   const deleteHandler = () =>{
+    deleteJob(id).then(() =>{
+      setTemp(temp.filter(job => job.id !== id))
+      setShow(false)
+      setId();
+    })
   }
 
   return (
@@ -37,11 +47,11 @@ export default function JobTable(props) {
             <tbody>
               { city ?
                 temp.filter(j => j.miestas === city).map((job) => {
-                  return <AdminJob employer={props.flag} show={handleShow} close={handleClose} data={job} key={job.id} />;
+                  return <AdminJob setId={setId} employer={props.flag} show={handleShow} close={handleClose} data={job} key={job.id} />;
                 })
                 :
                 temp.map((job) => {
-                  return <AdminJob employer={props.flag} show={handleShow} close={handleClose} data={job} key={job.id}/>;
+                  return <AdminJob setId={setId} employer={props.flag} show={handleShow} close={handleClose} data={job} key={job.id}/>;
                 })
               }
             </tbody>
@@ -58,7 +68,7 @@ export default function JobTable(props) {
         </Modal.Header>
         <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>Trinti</Button>
+          <Button variant="danger" onClick={deleteHandler}>Ištrinti</Button>
         </Modal.Footer>
       </Modal>
       </Container>

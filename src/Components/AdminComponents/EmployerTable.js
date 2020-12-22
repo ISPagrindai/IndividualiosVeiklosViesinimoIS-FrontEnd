@@ -1,7 +1,9 @@
 import { Table, Modal, Button, Container, Col, Row } from "react-bootstrap";
 import {useState, useEffect} from 'react'
 import Employer from "./Employer";
-import {getEmployers, deleteEmployer} from '../../Services/EmployerService'
+import { getEmployers, deleteEmployer } from '../../Services/EmployerService'
+import {confirmEmployer} from '../../Services/NewEmployerService'
+
 
 export default function EmployerTable(props) {
   const [show, setShow] = useState(false);
@@ -12,12 +14,19 @@ export default function EmployerTable(props) {
 
    useEffect(() =>{
     getEmployers().then(response => setTemp(response));
-  })
+   }, [])
+  
   const deleteHandler = () => {
     deleteEmployer(id).then(() => {
       setTemp(temp.filter(job => job.id !== id))
       setShow(false)
     })
+  }
+   const freezeHandler = () => {
+     confirmEmployer({ arUzsaldytas: true, idImone: id }).then(() => {
+       setTemp(temp.filter(i => i.id !== id));  
+       handleClose();
+     } )
   }
 
   return (
@@ -53,9 +62,10 @@ export default function EmployerTable(props) {
         </Modal.Header>
         <Modal.Body>Prašome patvirtinti veiksmą</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={deleteHandler}>Trinti</Button>
+            <Button variant="danger" onClick={deleteHandler}>Trinti</Button>
+            <Button variant="danger" onClick={freezeHandler}>Užšaldyti</Button>
         </Modal.Footer>
-      </Modal>
+        </Modal>        
       </Container>
     </>
   );
