@@ -103,10 +103,7 @@ function App() {
                 </Route>
                 <Route path="/vipForm">
                   <VipForm />
-                </Route>
-                <Route path="/individualWorkEdit">
-                  <IndividualWorkEdit />
-                </Route>
+                </Route>               
                 <Route exact string path="/individualWorkForm">
                   <IndividualWorkForm />
                 </Route>

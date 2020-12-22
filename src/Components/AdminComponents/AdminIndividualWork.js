@@ -17,7 +17,7 @@ export default function AdminIndividualWrok(props) {
       {/* <td>{props.data.fkVeiklosTipasidVeiklosTipas}</td> */}
       {props.flag ? (
         <td>
-          <Button variant="secondary" href="individualWorkEdit">
+          <Button variant="secondary" href={`/individualWorkForm/edit/${props.data.id}`}>
             Redaguoti
           </Button>
           <Button variant="danger" onClick={deleteHandler}>
