@@ -37,8 +37,7 @@ export default function IndividualWorkView(props) {
                       <ul className="list-group list-group-flush">
                         <li className="list-group-item">
                           <b>El-paštas: </b>
-                          {profile.elpatas}
-                          el pastas
+                          {profile.elPastas}
                         </li>
                         <li className="list-group-item">
                           <b>Lytis: </b>
@@ -61,9 +60,6 @@ export default function IndividualWorkView(props) {
                   </div>
                 </div>
                 <div className="card-footer">
-              <Button className="my-1" variant="success" href={`/individualWorkForm/${profile.id}`}>
-                Sukurti veiklą
-              </Button>{" "}
             </div>
               </div>
 

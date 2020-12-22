@@ -1,5 +1,5 @@
 import TemporaryWorker from '../Models/TemporaryWorker';
-import {errorToString, get, post, remove} from './restApiService';
+import {errorToString, get, post, remove, put} from './restApiService';
 import TemporaryWorkTypes from "../Models/TemporaryWorkTypes";
 import NotificationService from './NotificationService';
 
@@ -15,6 +15,16 @@ export function getWorkers(){
       //NotificationService.error(errorToString(error));
       console.log(error);
     });
+}
+export function getWorker(id){
+  return get('/IndividualiVeikla/', id)
+  .then((response) => {
+    return new TemporaryWorker(response);
+  })
+  .catch((error) => {
+    //NotificationService.error(errorToString(error));
+    console.log(error);
+  });
 }
 
 export function getWorkTypes(){
@@ -33,11 +43,22 @@ export function newWorker(data){
   data.veiklosTipas = parseInt(data.veiklosTipas)
   data.kaina = parseFloat(data.kaina)
 
-  console.log(data)
-
   return post('/IndividualiVeikla', data)
   .then((response) => {
     NotificationService.success("Individuali veikla sukurta")
+  })
+  .catch((error) => {
+    NotificationService.error(errorToString(error));
+  });
+}
+export function updateWorker(data){
+  data.id = parseInt(data.id);
+  data.veiklosTipas = parseInt(data.veiklosTipas)
+  data.kaina = parseFloat(data.kaina)
+
+  return put('/IndividualiVeikla', data)
+  .then((response) => {
+    NotificationService.success("Individuali veikla paredaguota")
   })
   .catch((error) => {
     NotificationService.error(errorToString(error));

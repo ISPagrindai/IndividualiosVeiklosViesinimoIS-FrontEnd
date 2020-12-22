@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import CurrencyInput from 'react-currency-input-field';
 import { useHistory, useParams } from 'react-router-dom';
 import {useState, useEffect} from 'react';
-import { newWorker } from '../Services/WorkerService';
+import { newWorker, getWorker, updateWorker } from '../Services/WorkerService';
 import { getJobTypes } from '../Services/HelperService';
 
 export default function UserProfile() {
@@ -11,14 +11,24 @@ export default function UserProfile() {
     const [types, setTypes] = useState();
     const history = useHistory();
     const {id} = useParams();
+    const [data, setData] = useState();
+    const [kaina, setKaina] = useState();
+    const miestai = ["Vilnius", "Kaunas", "Klaipėda", "Šiauliai", "Panevežys", "Alytus", "Marijampolė"];
 
-
-  const { handleSubmit, register, errors, control } = useForm();
+  const { handleSubmit, register, errors, control, setValue } = useForm();
 
   const onSubmit = (values) => {
-    newWorker(values).then(() => {
-        history.push("/individualWorkList");
-      });
+    values.kaina = kaina;
+    if(values.id){
+        updateWorker(values).then(() => {
+            history.push("/individualWorkList");
+        });
+    }
+    else{
+        newWorker(values).then(() => {
+            history.push("/individualWorkList");
+        });
+    }
   };
 
   useEffect(() =>{
@@ -26,6 +36,16 @@ export default function UserProfile() {
       setTypes(response)
     })
   }, [])
+
+  useEffect(() =>{
+    if(id){
+        getWorker(id).then(response => {
+            setData(response);
+            setKaina(response.kaina)
+            setValue("kaina", response.kaina)
+        })
+    }
+  },[id])
 
 
   return ( 
@@ -41,6 +61,7 @@ export default function UserProfile() {
                             <input
                             id="pavadinimas"
                             name="pavadinimas"
+                            defaultValue={data ? data.pavadinimas : null}
                             className="form-control"
                             ref={register({
                                 required: "*Privalomas laukas",
@@ -58,6 +79,7 @@ export default function UserProfile() {
                             <textarea
                             id="aprasymas"
                             name="aprasymas"
+                            defaultValue={data ? data.aprasymas : null}
                             className="form-control"
                             ref={register({
                                 required: "*Privalomas laukas",
@@ -76,14 +98,16 @@ export default function UserProfile() {
                                 allowNegativeValue={false}
                                 decimalsLimit={2}
                                 prefix="€"
-                                onChange={(e) => onChange(e)}
+                                onChange={(e) => {onChange(e); setKaina(e)} }
+                                value={kaina}
+                                onBlur={onBlur}
                                 
                                 />)}
                                 id="kaina"
                                 name="kaina"
                                 rules={{ required: '*Privalomas laukas', min: {value: 0.01, message: '*Privalomas laukas'} }}
                                 control={control}
-                                defaultValue={"-1"}
+                                defaultValue={data?.kaina || ""}
                             />
                             {errors.kaina && <span style={{"color": "red"}}>{errors.kaina.message}</span>}
                         </div>
@@ -93,6 +117,7 @@ export default function UserProfile() {
                             <textarea
                             id="grafikas"
                             name="grafikas"
+                            defaultValue={data ? data.grafikas : null}
                             className="form-control"
                             ref={register({
                                 required: "*Privalomas laukas",
@@ -108,13 +133,12 @@ export default function UserProfile() {
                             <label htmlFor="miestas">Miestas</label>
                             <select className="form-control" id="miestas" name="miestas" ref={register({required: "*Privalomas laukas"})}>
                                 <option value="">Pasirinkite miestą</option>
-                                <option value="Vilnius">Vilnius</option>
-                                <option value="Kaunas">Kaunas</option>
-                                <option value="Klaipėda">Klaipėda</option>
-                                <option value="Šiauliai">Šiauliai</option>
-                                <option value="Panevežys">Panevežys</option>
-                                <option value="Alytus">Alytus</option>
-                                <option value="Marijampolė">Marijampolė</option>
+                                  {miestai.map(miestas => {
+                                      if (data && data.miestas === miestas)
+                                          return (<option value={miestas} selected>{miestas}</option>)
+
+                                      return (<option value={miestas}>{miestas}</option>)
+                                  })}
                             </select>
                             {errors.miestas && <span style={{"color": "red"}}>{errors.miestas.message}</span>}
                         </div>
@@ -124,9 +148,12 @@ export default function UserProfile() {
                             <label htmlFor="veiklosTipas">Veiklos tipas</label>
                             <select className="form-control" id="veiklosTipas" name="veiklosTipas" ref={register({required: "*Privalomas laukas"})}>
                                 <option value="">Pasirinkite veiklos tipą</option>
-                                {types.map((type, i) => (
-                                    <option key={i} value={type.id}>{type.pavadinimas}</option>
-                                ))}
+                                      {types ? types.map(type => {
+                                          if (data && data.veiklosTipas === type.id)
+                                              return (<option value={type.id} selected>{type.pavadinimas}</option>)
+
+                                          return (<option value={type.id}>{type.pavadinimas}</option>)
+                                      }) : null}
                             </select>
                             {errors.miestas && <span style={{"color": "red"}}>{errors.miestas.message}</span>}
                         </div>

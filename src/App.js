@@ -77,8 +77,8 @@ function App() {
             </Route>
             {isLoggedIn ? (
               <>
-                <Route exact strict path="/individualWork/edit/:id">
-                  <IndividualWorkView />
+                <Route exact strict path="/individualWorkForm/edit/:id">
+                  <IndividualWorkForm />
                 </Route>
                 <Route path="/employers">
                   <EmployersView flag={true} />
@@ -107,7 +107,7 @@ function App() {
                 <Route path="/individualWorkEdit">
                   <IndividualWorkEdit />
                 </Route>
-                <Route exact string path="/individualWorkForm/:id">
+                <Route exact string path="/individualWorkForm">
                   <IndividualWorkForm />
                 </Route>
                 <Route path="/jobHistory">

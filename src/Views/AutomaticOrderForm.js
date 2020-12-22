@@ -46,7 +46,7 @@ export default function AutomaticOrderForm(){
                 Darbuotojo el-paštas
                 </Form.Label>
                 <Col sm="10">
-                <Form.Control plaintext readOnly name="worker_email" defaultValue="tipo el pastas" />
+                <Form.Control plaintext readOnly name="worker_email" defaultValue={profile.elPastas} />
                 </Col>
                 </Form.Group>
 

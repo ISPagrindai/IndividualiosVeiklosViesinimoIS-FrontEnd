@@ -10,24 +10,29 @@ init("user_eNIaeY7tuSTS9yz3Rtsvq");
 
 export default function IndividualWork(props){
   const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
+  const [profile, setProfile] = useState();
+  const [workTypes, setWorkTypes] = useState();
+
+
+  const deleteHandler = () => {
+    setShow(true)
+    props.setId(props.data.id);
+  }
 
   useEffect(() =>{
+    console.log(props.data.vartotojoId);
     getProfile(props.data.vartotojoId).then(response => setProfile(response));
-  },[])
+  },[props.data.vartotojoId])
 
   
   useEffect(() =>{
     getWorkTypes().then(response => setWorkTypes(response));
   },[])
 
-  const deleteHandler = () => {
-    handleShow();
+  const myDeleteHandler = () => {
+    setShow(true)
     props.setId(props.data.id);
   }
-
-  const [profile, setProfile] = useState();
-  const [workTypes, setWorkTypes] = useState();
 
     return (
     <> {profile && workTypes ?
@@ -44,8 +49,7 @@ export default function IndividualWork(props){
                         {profile.vardas} {profile.pavarde}
                       </li>
                       <li className="list-group-item">
-                        {props.data.email}
-                        tipo email
+                        {profile.elPastas}
                       </li>
                       <br/>
                     </ul>
@@ -59,26 +63,16 @@ export default function IndividualWork(props){
               </div>
               <div className="card-footer">
 
-                <Button href="vipForm" className="my-1" variant="info">
-                  Iškelti profilį
-                  </Button>{" "}
+              {props.currentId.response === props.data.vartotojoId ? <Button href="vipForm" className="my-1" variant="info"> Iškelti profilį </Button> : null}
 
-                  <Button
-                href={`/worker/edit/${props.data.id}`}
-                className="text-white"
-                variant="warning"
-              >
-              Redaguoti
-              </Button>{" "}
-              {props.currentId == props.data.vartotojoId ? <Button onClick={props.show} variant="danger" onClick={deleteHandler}>Ištrinti</Button> : null}
+              {props.currentId.response === props.data.vartotojoId ? <Button href={`/individualWorkForm/edit/${props.data.id}`} className="text-white" variant="warning">Redaguoti</Button> : null}
+              {props.currentId.response === props.data.vartotojoId ? <Button variant="danger" onClick={myDeleteHandler}>Ištrinti</Button> : null}
                   
                 <Button href={`individualWork/${profile.id}`} variant="success">
                   Peržiūrėti profilį
                 </Button>{" "}
 
-                <Button href={`/employeeReview/${profile.id}/work/${props.data.vartotojoId}`} variant="success">
-                Palikti atsiliepimą apie vartotoją
-              </Button>{" "}
+              {props.currentId.response !== -1  && props.currentId.response !== props.data.vartotojoId ?<Button href={`/employeeReview/${profile.id}/work/${props.data.vartotojoId}`} variant="success"> Palikti atsiliepimą apie vartotoją </Button> : null }
                 
                 <Button href="employeeOrder" className="my-1" variant="dark">
                   Užsisakyti darbuotoją !
